@@ -14,8 +14,6 @@ builds:
     binary: speedway
     goos:
       - linux
-    goarch:
-      - amd64
   - id: darwin-build
     env:
       - CGO_ENABLED=1
