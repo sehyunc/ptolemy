@@ -48,7 +48,7 @@ function CheckboxListGroupContainer({
 	return (
 		<CheckboxListGroupComponent
 			schema={schema}
-			list={allObjects}
+			list={allObjects.filter((item) => item.schemaDid === schema.did)}
 			onChangeMainCheckbox={onChangeMainCheckbox}
 			mainCheckboxIsChecked={mainCheckboxIsChecked}
 			onChange={onChange}

@@ -54,12 +54,11 @@ function CheckboxListGroupComponent({
 	}
 
 	function mapToListFormat(
-		objectsList: SonrObject[],
+		objects: SonrObject[],
 		schemaDid: string
 	): SearchableListType {
-		const newList = objectsList
-			.filter((item: SonrObject) => item.schemaDid === schemaDid)
-			.map(({ cid, data }: SonrObject): SearchableListItem => {
+		const newList = objects.map(
+			({ cid, data }: SonrObject): SearchableListItem => {
 				const listItem: SearchableListItem = {}
 				const checkbox = checkboxes.find(
 					(checkbox) =>
@@ -78,13 +77,16 @@ function CheckboxListGroupComponent({
 					schemaDid,
 					listItem,
 				})
-			})
+			}
+		)
 
 		return newList
 	}
 
-	return (
-		<div className="flex flex-col justify-start items-start">
+	return list.length === 0 ? (
+		<></>
+	) : (
+		<div className="flex flex-col justify-start items-start mb-4">
 			<div
 				className={`flex w-full
 				${

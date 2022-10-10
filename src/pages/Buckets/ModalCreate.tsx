@@ -141,21 +141,16 @@ const ModalCreateBucket = () => {
 								<span className="block mb-4 flex-1 uppercase font-semibold text-custom-2xs text-default">
 									Add Objects From Schemas
 								</span>
-								{schemas.map((schema, index) => {
-									if (!allObjects.some((obj) => obj.schemaDid === schema.did))
-										return null
-									return (
-										<div key={schema.did} className="mb-2">
-											<CheckboxListGroup
-												defaultOpen={index === 0}
-												schema={schema}
-												checkboxes={checkboxes}
-												setCheckboxes={setCheckboxes}
-												onChange={onChangeObjectCheckbox}
-											/>
-										</div>
-									)
-								})}
+								{schemas.map((schema, index) => (
+									<CheckboxListGroup
+										defaultOpen={index === 0}
+										schema={schema}
+										checkboxes={checkboxes}
+										setCheckboxes={setCheckboxes}
+										onChange={onChangeObjectCheckbox}
+										key={schema.did}
+									/>
+								))}
 							</div>
 						)}
 					</div>
