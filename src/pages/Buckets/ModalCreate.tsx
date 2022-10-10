@@ -74,7 +74,7 @@ const ModalCreateBucket = () => {
 
 	const save = async () => {
 		if (!label) {
-			setError("Bucket Name is required")
+			setError("The bucket name is required")
 			return
 		}
 
@@ -109,6 +109,7 @@ const ModalCreateBucket = () => {
 							<span className="flex-1 uppercase font-semibold text-custom-2xs text-default">
 								New Bucket
 							</span>
+
 							<button
 								className="font-extrabold text-button-transparent text-custom-sm"
 								onClick={closeModal}
@@ -128,34 +129,37 @@ const ModalCreateBucket = () => {
 							}}
 							autoFocus
 						/>
-					</div>
-					{allObjects.length > 0 && (
-						<div className="max-h-[50vh] overflow-y-auto p-8">
-							<span className="block mb-4 flex-1 uppercase font-semibold text-custom-2xs text-default">
-								Add Objects From Schemas
+
+						<div className="mb-6">
+							<span className="text-tertiary-red block text-xs">
+								{error}&nbsp;
 							</span>
-							{schemas.map((schema, index) => {
-								if (!allObjects.some((obj) => obj.schemaDid === schema.did))
-									return null
-								return (
-									<div key={schema.did} className="mb-2">
-										<CheckboxListGroup
-											defaultOpen={index === 0}
-											schema={schema}
-											checkboxes={checkboxes}
-											setCheckboxes={setCheckboxes}
-											onChange={onChangeObjectCheckbox}
-										/>
-									</div>
-								)
-							})}
 						</div>
-					)}
-					{error && (
-						<div className="ml-8 mb-4">
-							<span className="text-tertiary-red block text-xs">{error}</span>
-						</div>
-					)}
+
+						{allObjects.length > 0 && (
+							<div className="max-h-[50vh] overflow-y-auto">
+								<span className="block mb-4 flex-1 uppercase font-semibold text-custom-2xs text-default">
+									Add Objects From Schemas
+								</span>
+								{schemas.map((schema, index) => {
+									if (!allObjects.some((obj) => obj.schemaDid === schema.did))
+										return null
+									return (
+										<div key={schema.did} className="mb-2">
+											<CheckboxListGroup
+												defaultOpen={index === 0}
+												schema={schema}
+												checkboxes={checkboxes}
+												setCheckboxes={setCheckboxes}
+												onChange={onChangeObjectCheckbox}
+											/>
+										</div>
+									)
+								})}
+							</div>
+						)}
+					</div>
+
 					<div className="dark bg-surface-default py-6 px-8 text-right rounded-b-2xl">
 						<button
 							onClick={save}
