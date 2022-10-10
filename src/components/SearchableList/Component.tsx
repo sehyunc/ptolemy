@@ -54,7 +54,7 @@ function SearchableListComponent({
 					/>
 					{onClickNewItem && (
 						<button
-							className="text-skin-primary bg-skin-primary rounded px-4"
+							className="text-skin-primary font-extrabold bg-skin-primary rounded px-4"
 							onClick={onClickNewItem}
 						>
 							New
