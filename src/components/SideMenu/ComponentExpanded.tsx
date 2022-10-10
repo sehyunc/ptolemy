@@ -72,7 +72,7 @@ function SideMenuComponentExpanded({
 
 			<div className="border-b border-outlined-disabled mb-10 w-full h-px" />
 
-			<div className="flex-1">
+			<div className="flex-1 overflow-auto">
 				<ButtonGroup
 					title="Modules"
 					navigate={navigate}

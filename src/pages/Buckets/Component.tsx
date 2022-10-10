@@ -27,7 +27,7 @@ const BucketsPageComponent = ({ data, loading }: Props) => {
 	return (
 		<LayoutMenu>
 			<div className="py-14 px-10">
-				<div className="flex flex-row">
+				<div className="flex flex-row gap-2">
 					<h1 className="flex-1 text-custom-3xl tracking-custom-x2tighter font-extrabold text-default">
 						Buckets
 					</h1>

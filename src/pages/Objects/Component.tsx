@@ -40,14 +40,14 @@ const ObjectsPageComponent = ({
 	return (
 		<LayoutMenu>
 			<div className="py-14 px-10">
-				<div className="flex justify-between items-center">
+				<div className="flex justify-between items-center gap-4">
 					<h1 className="text-custom-3xl tracking-custom-x2tighter font-extrabold text-default">
 						Objects
 					</h1>
 
-					<div className="flex w-full justify-end">
+					<div className="flex w-full justify-end gap-4">
 						{schemaCount > 0 && (
-							<div className="flex w-3/12 flex-col items-start justify-center">
+							<div className="flex w-40 flex-col items-start justify-center">
 								<div className="mb-2">Schema</div>
 
 								<div className="relative pointer-events-none select-none border border-default-border rounded-md w-full cursor-pointer flex justify-between">
@@ -76,7 +76,7 @@ const ObjectsPageComponent = ({
 						)}
 
 						{bucketCount > 0 && (
-							<div className="ml-4 flex w-3/12 flex-col items-start justify-center">
+							<div className="flex w-40 flex-col items-start justify-center">
 								<div className="mb-2">Bucket</div>
 
 								<div className="relative pointer-events-none select-none border border-default-border rounded-md w-full cursor-pointer flex justify-between">
