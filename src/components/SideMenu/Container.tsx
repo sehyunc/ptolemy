@@ -3,14 +3,12 @@ import { useDispatch } from "react-redux"
 import { useLocation, useNavigate } from "react-router-dom"
 import { AppSettingsContext } from "../../contexts/appSettingsContext/appSettingsContext"
 import { BASE_API, ROOT_RESET } from "../../utils/constants"
-import SideMenuComponent from "./Component"
+import SideMenuComponentCollapsed from "./ComponentCollapsed"
+import SideMenuComponentExpanded from "./ComponentExpanded"
 
-interface SideMenuContainerProps {
-	toggleMenuIsCollapsed: () => void
-}
-
-function SideMenuContainer({ toggleMenuIsCollapsed }: SideMenuContainerProps) {
-	const { menuIsCollapsed } = useContext(AppSettingsContext)
+function SideMenuContainer() {
+	const { menuIsCollapsed, setMenusIsCollapsed } =
+		useContext(AppSettingsContext)
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 	const location = useLocation()
@@ -26,13 +24,19 @@ function SideMenuContainer({ toggleMenuIsCollapsed }: SideMenuContainerProps) {
 		navigate("/")
 	}
 
-	return (
-		<SideMenuComponent
+	return menuIsCollapsed ? (
+		<SideMenuComponentCollapsed
 			navigate={navigate}
 			currentPath={currentPath}
-			menuIsCollapsed={menuIsCollapsed}
-			toggleMenuIsCollapsed={toggleMenuIsCollapsed}
 			onLogout={logout}
+			onChangeSize={() => setMenusIsCollapsed(false)}
+		/>
+	) : (
+		<SideMenuComponentExpanded
+			navigate={navigate}
+			currentPath={currentPath}
+			onLogout={logout}
+			onChangeSize={() => setMenusIsCollapsed(true)}
 		/>
 	)
 }

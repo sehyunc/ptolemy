@@ -14,7 +14,6 @@ import {
 import IconLinkAccessApi from "../../assets/svgs/LinkAccessApi"
 import IconLinkDocsSupport from "../../assets/svgs/LinkDocsSupport"
 import AlertSvg from "../../assets/svgs/Alert"
-import LeftSquareIconSvg from "../../assets/svgs/LeftSquaredIcon"
 import MenuLink from "./components/MenuLink"
 import IconUserProfile from "../../assets/svgs/IconUserProfile"
 
@@ -36,61 +35,37 @@ const modulesButtons = [
 	},
 ]
 
-interface SideMenuComponentProps {
+interface SideMenuComponentCollapsedProps {
 	navigate: NavigateFunction
 	currentPath: string
-	toggleMenuIsCollapsed: () => void
-	menuIsCollapsed: boolean
 	onLogout: () => void
+	onChangeSize: () => void
 }
 
-function SideMenuComponent({
+function SideMenuComponentCollapsed({
 	navigate,
 	currentPath,
-	menuIsCollapsed,
-	toggleMenuIsCollapsed,
 	onLogout,
-}: SideMenuComponentProps) {
+	onChangeSize,
+}: SideMenuComponentCollapsedProps) {
 	const address = useSelector(selectAddress)
 	const alias = useSelector(selectAlias)
 
 	return (
-		<div
-			className={`
-			${!menuIsCollapsed ? "w-80" : "w-28"}
-			dark text-default flex flex-col bg-brand-tertiary h-full px-4 py-[42px] shrink-0 fixed z-10
-		`}
-		>
+		<div className="w-28 dark text-default flex flex-col bg-brand-tertiary h-screen px-4 py-[42px] shrink-0 z-10">
 			<div
-				onClick={() => menuIsCollapsed && toggleMenuIsCollapsed()}
-				className={`
-					${!menuIsCollapsed ? "cursor-pointer justify-between" : "justify-center"}
-					flex  items-center w-full mb-10 cursor-pointer
-				`}
+				onClick={onChangeSize}
+				className="justify-center flex  items-center w-full mb-10 cursor-pointer"
 			>
 				<div className="flex justify-center">
 					<div className="w-11 h-11">
 						<SonrLogoSvg />
 					</div>
-					{!menuIsCollapsed && (
-						<>
-							<div className="w-2.5" />
-							<span className="font-extrabold tracking-custom-tighter text-custom-xl">
-								Speedway
-							</span>
-						</>
-					)}
 				</div>
-				{!menuIsCollapsed && (
-					<div
-						onClick={() => toggleMenuIsCollapsed()}
-						className="cursor-pointer"
-					>
-						<LeftSquareIconSvg />
-					</div>
-				)}
 			</div>
+
 			<div className="border-b border-outlined-disabled mb-10 w-full h-px" />
+
 			<div className="flex-1">
 				<ButtonGroup
 					title="Modules"
@@ -100,12 +75,7 @@ function SideMenuComponent({
 					className="mb-10"
 				/>
 
-				<div
-					className={`
-						${menuIsCollapsed ? "text-center" : ""}
-						text-custom-2xs uppercase font-semibold text-subdued mb-6
-					`}
-				>
+				<div className="text-custom-2xs uppercase font-semibold text-subdued mb-6">
 					Tools
 				</div>
 				<MenuLink
@@ -145,4 +115,4 @@ function SideMenuComponent({
 	)
 }
 
-export default SideMenuComponent
+export default SideMenuComponentCollapsed
