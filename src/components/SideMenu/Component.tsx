@@ -18,13 +18,6 @@ import LeftSquareIconSvg from "../../assets/svgs/LeftSquaredIcon"
 import MenuLink from "./components/MenuLink"
 import IconUserProfile from "../../assets/svgs/IconUserProfile"
 
-interface SideMenuComponentProps {
-	navigate: NavigateFunction
-	currentPath: string
-	toggleMenuIsCollapsed: () => void
-	menuIsCollapsed: boolean
-}
-
 const modulesButtons = [
 	{
 		label: "Schemas",
@@ -43,11 +36,20 @@ const modulesButtons = [
 	},
 ]
 
+interface SideMenuComponentProps {
+	navigate: NavigateFunction
+	currentPath: string
+	toggleMenuIsCollapsed: () => void
+	menuIsCollapsed: boolean
+	onLogout: () => void
+}
+
 function SideMenuComponent({
 	navigate,
 	currentPath,
 	menuIsCollapsed,
 	toggleMenuIsCollapsed,
+	onLogout,
 }: SideMenuComponentProps) {
 	const address = useSelector(selectAddress)
 	const alias = useSelector(selectAlias)
@@ -128,8 +130,10 @@ function SideMenuComponent({
 					)}
 				/>
 			</div>
+
 			<div className="border-b border-outlined-disabled mb-10 w-full h-px" />
-			<div className="flex gap-2 px-2">
+
+			<div className="flex gap-2 px-2" onClick={onLogout}>
 				<div>
 					<IconUserProfile />
 				</div>
