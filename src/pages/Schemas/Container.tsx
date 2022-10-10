@@ -15,7 +15,6 @@ import {
 	SchemaMeta,
 } from "../../utils/types"
 import SchemasPageComponent from "./Component"
-import EmptyList from "./components/EmptyList"
 import ViewProperties from "./components/ViewProperties"
 
 function SchemasPageContainer() {
@@ -55,18 +54,12 @@ function SchemasPageContainer() {
 	}
 
 	return (
-		<>
-			{schemaMetadata && schemaMetadata.length > 0 ? (
-				<SchemasPageComponent
-					openNewSchemaModal={openNewSchemaModal}
-					list={mapToListFormat(schemaMetadata)}
-					searchableAndSortableFieldKey="Schema name"
-					loading={loading}
-				/>
-			) : (
-				<EmptyList openNewSchemaModal={openNewSchemaModal} loading={loading} />
-			)}
-		</>
+		<SchemasPageComponent
+			openNewSchemaModal={openNewSchemaModal}
+			list={mapToListFormat(schemaMetadata)}
+			searchableAndSortableFieldKey="Schema name"
+			loading={loading}
+		/>
 	)
 }
 
