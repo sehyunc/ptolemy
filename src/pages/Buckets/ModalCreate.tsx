@@ -137,7 +137,7 @@ const ModalCreateBucket = () => {
 						</div>
 
 						{allObjects.length > 0 && (
-							<div className="max-h-[50vh] overflow-y-auto">
+							<div className="h-[50vh] overflow-y-auto pb-16">
 								<span className="block mb-4 flex-1 uppercase font-semibold text-custom-2xs text-default">
 									Add Objects From Schemas
 								</span>

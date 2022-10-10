@@ -40,7 +40,7 @@ const ObjectsPageComponent = ({
 	return (
 		<LayoutMenu>
 			<div className="py-14 px-10">
-				<div className="flex justify-between items-center gap-4">
+				<div className="flex justify-between items-center gap-4 mb-8">
 					<h1 className="text-custom-3xl tracking-custom-x2tighter font-extrabold text-default">
 						Objects
 					</h1>
