@@ -53,7 +53,7 @@ const ModalCreateBucket = () => {
 	}
 
 	const onChangeObjectCheckbox =
-		(schemaDid: string) => (cid: string, checked: boolean) => {
+		(schemaDid: string) => (cid: string) => (checked: boolean) => {
 			if (!cid) return
 			const index = checkboxes.findIndex(
 				(item) => item.cid === cid && item.schemaDid === schemaDid

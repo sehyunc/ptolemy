@@ -10,7 +10,7 @@ interface CheckboxListGroupContainerProps {
 	setCheckboxes: React.Dispatch<
 		React.SetStateAction<objectsSelectionCheckbox[]>
 	>
-	onChange: (cid: string, checked: boolean) => void
+	onChange: (cid: string) => (checked: boolean) => void
 	defaultOpen: boolean
 }
 

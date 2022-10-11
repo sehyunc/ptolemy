@@ -1,3 +1,4 @@
+import { FC } from "react"
 import { addDefaultFieldsToObjectsList } from "../../utils/mappings"
 import {
 	ListTypes,
@@ -14,15 +15,10 @@ interface CheckboxListGroupComponentProps {
 	list: SonrObject[]
 	onChangeMainCheckbox: () => void
 	mainCheckboxIsChecked: boolean
-	onChange: (cid: string, checked: boolean) => void
+	onChange: (cid: string) => (checked: boolean) => void
 	toggleOpen: Function
 	checkboxes: objectsSelectionCheckbox[]
 	isOpen: boolean
-}
-
-interface renderCheckboxProps {
-	checkbox: objectsSelectionCheckbox
-	cid: string
 }
 
 function CheckboxListGroupComponent({
@@ -35,24 +31,10 @@ function CheckboxListGroupComponent({
 	isOpen,
 	toggleOpen,
 }: CheckboxListGroupComponentProps) {
-	function renderCheckbox({ checkbox, cid }: renderCheckboxProps) {
-		return (
-			<div>
-				<input
-					checked={checkbox.checked}
-					type="checkbox"
-					onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-						onChange(cid, event.target.checked)
-					}
-				/>
-			</div>
-		)
-	}
-
-	function mapToListFormat(
+	const mapToListFormat = (
 		objects: SonrObject[],
 		schemaDid: string
-	): SearchableListType {
+	): SearchableListType => {
 		const newList = objects.map(
 			({ cid, data }: SonrObject): SearchableListItem => {
 				const listItem: SearchableListItem = {}
@@ -60,10 +42,15 @@ function CheckboxListGroupComponent({
 					(checkbox) =>
 						checkbox.cid === cid && checkbox.schemaDid === schema.did
 				)
+
 				if (checkbox) {
 					listItem[""] = {
 						text: "",
-						Component: () => renderCheckbox({ checkbox, cid }),
+						Component: CheckboxElement,
+						props: {
+							checked: checkbox.checked,
+							onChange: onChange(cid),
+						},
 						shrinkColumn: true,
 					}
 				}
@@ -114,6 +101,27 @@ function CheckboxListGroupComponent({
 					loading={false}
 				/>
 			</div>
+		</div>
+	)
+}
+
+type CheckboxElementProps = {
+	checked: boolean
+	onChange: (checked: boolean) => void
+}
+const CheckboxElement: FC<CheckboxElementProps> = ({
+	checked,
+	onChange,
+}: CheckboxElementProps) => {
+	return (
+		<div>
+			<input
+				checked={checked}
+				type="checkbox"
+				onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+					onChange(event.target.checked)
+				}
+			/>
 		</div>
 	)
 }
