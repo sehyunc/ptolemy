@@ -16,7 +16,7 @@ interface CheckboxListGroupComponentProps {
 	onChangeMainCheckbox: () => void
 	mainCheckboxIsChecked: boolean
 	onChange: (cid: string) => (checked: boolean) => void
-	toggleOpen: Function
+	toggleOpen: () => void
 	checkboxes: objectsSelectionCheckbox[]
 	isOpen: boolean
 }
@@ -69,38 +69,40 @@ function CheckboxListGroupComponent({
 
 	return list.length === 0 ? (
 		<></>
-	) : (
-		<div className="flex flex-col justify-start items-start mb-4 px-2">
-			<div
-				className={`flex w-full
-				${
-					isOpen
-						? "rounded-t-md text-white bg-surface-button-subtle-hovered"
-						: "bg-surface-button-subtle rounded-md"
-				}
-			`}
-			>
-				<label className="flex items-center gap-4 px-4">
+	) : isOpen ? (
+		<div className="flex flex-col mb-4 px-2">
+			<div className="flex bg-surface-button-subtle-hovered text-white rounded-t-md">
+				<label className="flex gap-4 px-4 py-2">
 					<input
 						type="checkbox"
 						checked={mainCheckboxIsChecked}
 						onChange={onChangeMainCheckbox}
 					/>
-					<span className="block">{schema.label}</span>
+					<span>{schema.label}</span>
 				</label>
-				<div
-					onClick={() => toggleOpen()}
-					className="h-10 w-full cursor-pointer"
-				/>
+
+				<div className="flex-1" onClick={toggleOpen}></div>
 			</div>
-			<div className={`w-full ${!isOpen ? "hidden" : ""}`}>
-				<SearchableList
-					hideSearchBar={true}
-					initialList={mapToListFormat(list, schema.did)}
-					type={ListTypes.object}
-					loading={false}
+
+			<SearchableList
+				hideSearchBar={true}
+				initialList={mapToListFormat(list, schema.did)}
+				type={ListTypes.object}
+				loading={false}
+			/>
+		</div>
+	) : (
+		<div className="flex bg-surface-button-subtle-hovered text-white rounded-md mx-2 mb-4">
+			<label className="flex gap-4 px-4 py-2">
+				<input
+					type="checkbox"
+					checked={mainCheckboxIsChecked}
+					onChange={onChangeMainCheckbox}
 				/>
-			</div>
+				<span>{schema.label}</span>
+			</label>
+
+			<div className="flex-1" onClick={toggleOpen}></div>
 		</div>
 	)
 }
