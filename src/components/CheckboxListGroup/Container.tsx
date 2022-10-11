@@ -1,33 +1,31 @@
-import { Dispatch, SetStateAction, useState } from "react"
-import { useSelector } from "react-redux"
-import { selectAllObjects } from "../../redux/slices/bucketSlice"
-import { objectsSelectionCheckbox, SchemaMeta } from "../../utils/types"
+import { objectsSelectionCheckbox, SonrObject } from "../../utils/types"
 import CheckboxListGroupComponent from "./Component"
 
 interface CheckboxListGroupContainerProps {
-	schema: SchemaMeta
+	label: string
+	schemaDid: string
+	objects: SonrObject[]
 	checkboxes: objectsSelectionCheckbox[]
 	onChange: (cid: string) => (checked: boolean) => void
-	defaultOpen: boolean
+	initialOpenState: boolean
 }
 
 const CheckboxListGroupContainer = ({
-	schema,
+	label,
+	schemaDid,
+	objects,
 	checkboxes,
 	onChange,
-	defaultOpen,
+	initialOpenState,
 }: CheckboxListGroupContainerProps) => {
-	const allObjects = useSelector(selectAllObjects)
-	const [isOpen, setIsOpen] = useState(defaultOpen)
-
 	return (
 		<CheckboxListGroupComponent
-			schema={schema}
-			list={allObjects.filter((item) => item.schemaDid === schema.did)}
+			label={label}
+			schemaDid={schemaDid}
+			objects={objects}
 			onChange={onChange}
 			checkboxes={checkboxes}
-			isOpen={isOpen}
-			toggleOpen={() => setIsOpen(!isOpen)}
+			initialOpenState={initialOpenState}
 		/>
 	)
 }

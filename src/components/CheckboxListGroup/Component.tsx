@@ -1,67 +1,50 @@
-import { ChangeEvent, FC } from "react"
+import { ChangeEvent, FC, useState } from "react"
 import { addDefaultFieldsToObjectsList } from "../../utils/mappings"
 import {
 	ListTypes,
-	SchemaMeta,
-	SearchableListType,
-	SearchableListItem,
 	SonrObject,
 	objectsSelectionCheckbox,
 } from "../../utils/types"
 import SearchableList from "../SearchableList"
 
-interface CheckboxListGroupComponentProps {
-	schema: SchemaMeta
-	list: SonrObject[]
+type Props = {
+	label: string
+	schemaDid: string
+	objects: SonrObject[]
 	onChange: (cid: string) => (checked: boolean) => void
-	toggleOpen: () => void
+	initialOpenState: boolean
 	checkboxes: objectsSelectionCheckbox[]
-	isOpen: boolean
 }
-
-function CheckboxListGroupComponent({
-	schema,
-	list,
+const CheckboxListGroupComponent = ({
+	label,
+	schemaDid,
+	objects,
 	onChange,
 	checkboxes,
-	isOpen,
-	toggleOpen,
-}: CheckboxListGroupComponentProps) {
-	const mapToListFormat = (
-		objects: SonrObject[],
-		schemaDid: string
-	): SearchableListType => {
-		const newList = objects.map(
-			({ cid, data }: SonrObject): SearchableListItem => {
-				const listItem: SearchableListItem = {}
-				const checkbox = checkboxes.find(
-					(checkbox) =>
-						checkbox.cid === cid && checkbox.schemaDid === schema.did
-				)
+	initialOpenState,
+}: Props) => {
+	const [isOpen, setIsOpen] = useState(initialOpenState)
 
-				if (checkbox) {
-					listItem[""] = {
-						text: "",
+	const mapToListFormat = (objects: SonrObject[]) =>
+		objects
+			.map((object) => ({
+				fields: object.data,
+				cid: object.cid,
+				schemaDid,
+				listItem: {
+					"": {
 						Component: CheckboxElement,
 						props: {
-							checked: checkbox.checked,
-							onChange: onChange(cid),
+							checked: checkboxes.find(
+								(checkbox) => checkbox.cid === object.cid
+							)!.checked,
+							onChange: onChange(object.cid),
 						},
 						shrinkColumn: true,
-					}
-				}
-
-				return addDefaultFieldsToObjectsList({
-					fields: data,
-					cid,
-					schemaDid,
-					listItem,
-				})
-			}
-		)
-
-		return newList
-	}
+					},
+				},
+			}))
+			.map(addDefaultFieldsToObjectsList)
 
 	const onChangeTopCheckbox = () => {
 		const check = checkboxes.every((checkbox) => checkbox.checked)
@@ -69,7 +52,7 @@ function CheckboxListGroupComponent({
 			: true
 		checkboxes.map((checkbox) => onChange(checkbox.cid)(check))
 	}
-	return list.length === 0 ? (
+	return objects.length === 0 ? (
 		<></>
 	) : isOpen ? (
 		<div className="flex flex-col mb-4 px-2">
@@ -80,15 +63,15 @@ function CheckboxListGroupComponent({
 						checked={checkboxes.every((checkbox) => checkbox.checked)}
 						onChange={onChangeTopCheckbox}
 					/>
-					<span>{schema.label}</span>
+					<span>{label}</span>
 				</label>
 
-				<div className="flex-1" onClick={toggleOpen}></div>
+				<div className="flex-1" onClick={() => setIsOpen(false)}></div>
 			</div>
 
 			<SearchableList
 				hideSearchBar={true}
-				initialList={mapToListFormat(list, schema.did)}
+				initialList={mapToListFormat(objects)}
 				type={ListTypes.object}
 				loading={false}
 			/>
@@ -101,10 +84,10 @@ function CheckboxListGroupComponent({
 					checked={checkboxes.every((checkbox) => checkbox.checked)}
 					onChange={onChangeTopCheckbox}
 				/>
-				<span>{schema.label}</span>
+				<span>{label}</span>
 			</label>
 
-			<div className="flex-1" onClick={toggleOpen}></div>
+			<div className="flex-1" onClick={() => setIsOpen(true)}></div>
 		</div>
 	)
 }
