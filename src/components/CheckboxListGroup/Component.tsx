@@ -68,6 +68,7 @@ function CheckboxListGroupComponent({
 					listItem[""] = {
 						text: "",
 						Component: () => renderCheckbox({ checkbox, cid }),
+						shrinkColumn: true,
 					}
 				}
 
@@ -86,7 +87,7 @@ function CheckboxListGroupComponent({
 	return list.length === 0 ? (
 		<></>
 	) : (
-		<div className="flex flex-col justify-start items-start mb-4">
+		<div className="flex flex-col justify-start items-start mb-4 px-2">
 			<div
 				className={`flex w-full
 				${
@@ -96,13 +97,13 @@ function CheckboxListGroupComponent({
 				}
 			`}
 			>
-				<label className="flex items-center px-4">
+				<label className="flex items-center gap-4 px-4">
 					<input
 						type="checkbox"
 						checked={mainCheckboxIsChecked}
 						onChange={onChangeMainCheckbox}
 					/>
-					<span className="block ml-4">{schema.label}</span>
+					<span className="block">{schema.label}</span>
 				</label>
 				<div
 					onClick={() => toggleOpen()}

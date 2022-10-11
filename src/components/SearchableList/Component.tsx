@@ -44,7 +44,7 @@ function SearchableListComponent({
 		setSearchTerm(event.target.value)
 
 	return (
-		<div className="shadow-3xl rounded-2xl bg-white w-full">
+		<div className="shadow-3xl rounded-md bg-white w-full">
 			{!hideSearchBar && (
 				<div className="flex justify-between p-6 w-full">
 					<input
@@ -83,9 +83,13 @@ function SearchableListComponent({
 											text = "",
 											Component,
 											props,
+											shrinkColumn,
 										} = row[key] as SearchableListItemData
 										return (
-											<td className="px-4 py-5" key={`${key}-${itemIndex}`}>
+											<td
+												className={`px-4 py-5 ${shrinkColumn ? "w-0" : ""}`}
+												key={`${key}-${itemIndex}`}
+											>
 												{text}
 												{Component && <Component {...props} />}
 											</td>

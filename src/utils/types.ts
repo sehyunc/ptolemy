@@ -67,6 +67,7 @@ export type SearchableListItemData = {
 	text?: string
 	Component?: FC<any>
 	props?: Record<string, any>
+	shrinkColumn?: boolean
 }
 
 export type SearchableListItem = {
