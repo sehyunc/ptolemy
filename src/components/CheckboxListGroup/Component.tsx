@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { ChangeEvent, FC } from "react"
 import { addDefaultFieldsToObjectsList } from "../../utils/mappings"
 import {
 	ListTypes,
@@ -118,7 +118,7 @@ const CheckboxElement: FC<CheckboxElementProps> = ({
 			<input
 				checked={checked}
 				type="checkbox"
-				onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+				onChange={(event: ChangeEvent<HTMLInputElement>) =>
 					onChange(event.target.checked)
 				}
 			/>

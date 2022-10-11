@@ -1,5 +1,5 @@
 import { NebulaIcon } from "@sonr-io/nebula-react"
-import React from "react"
+import { ChangeEvent, Dispatch, SetStateAction } from "react"
 import {
 	ListTypes,
 	SearchableListItemData,
@@ -16,8 +16,8 @@ interface SearchableListComponentProps {
 	nextPage: () => void
 	previousPage: () => void
 	orderAsc: boolean
-	setPaginationCurrentPage: React.Dispatch<React.SetStateAction<number>>
-	setSearchTerm: React.Dispatch<React.SetStateAction<string>>
+	setPaginationCurrentPage: Dispatch<SetStateAction<number>>
+	setSearchTerm: Dispatch<SetStateAction<string>>
 	totalPages: number
 	onClickNewItem?: () => void
 	hideSearchBar?: boolean
@@ -40,7 +40,7 @@ function SearchableListComponent({
 	const isLastPage = paginationCurrentPage === totalPages
 	const previousPageButtonClass = isFirstPage ? "opacity-40" : "cursor-pointer"
 	const nextPageButtonClass = isLastPage ? "opacity-40" : "cursor-pointer"
-	const onChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+	const onChange = (event: ChangeEvent<HTMLInputElement>) =>
 		setSearchTerm(event.target.value)
 
 	return (

@@ -9,14 +9,15 @@ import {
 	Bucket,
 } from "../../utils/types"
 import LoadingCircleSvg from "../../assets/svgs/LoadingCircle"
+import { Dispatch, SetStateAction } from "react"
 
 interface ObjectsPageComponentProps {
 	schemas: Array<SchemaMeta>
 	buckets: Array<Bucket>
 	selectedSchema: string
 	selectedBucket: string
-	setSelectedSchema: React.Dispatch<React.SetStateAction<string>>
-	setSelectedBucket: React.Dispatch<React.SetStateAction<string>>
+	setSelectedSchema: Dispatch<SetStateAction<string>>
+	setSelectedBucket: Dispatch<SetStateAction<string>>
 	openNewObjectModal: () => void
 	loading: boolean
 	schemaCount: number
