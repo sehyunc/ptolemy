@@ -12,9 +12,9 @@ import SearchableList from "../SearchableList"
 interface CheckboxListGroupComponentProps {
 	schema: SchemaMeta
 	list: SonrObject[]
-	onChangeMainCheckbox: (event: React.ChangeEvent<HTMLInputElement>) => void
+	onChangeMainCheckbox: () => void
 	mainCheckboxIsChecked: boolean
-	onChange: Function
+	onChange: (cid: string, checked: boolean) => void
 	toggleOpen: Function
 	checkboxes: objectsSelectionCheckbox[]
 	isOpen: boolean
@@ -42,11 +42,7 @@ function CheckboxListGroupComponent({
 					checked={checkbox.checked}
 					type="checkbox"
 					onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-						onChange({
-							checked: event.target.checked,
-							cid,
-							schemaDid: schema.did,
-						})
+						onChange(cid, event.target.checked)
 					}
 				/>
 			</div>

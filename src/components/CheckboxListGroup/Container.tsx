@@ -10,7 +10,7 @@ interface CheckboxListGroupContainerProps {
 	setCheckboxes: React.Dispatch<
 		React.SetStateAction<objectsSelectionCheckbox[]>
 	>
-	onChange: Function
+	onChange: (cid: string, checked: boolean) => void
 	defaultOpen: boolean
 }
 
@@ -25,22 +25,16 @@ function CheckboxListGroupContainer({
 	const [mainCheckboxIsChecked, setMainCheckboxIsChecked] = useState(false)
 	const [isOpen, setIsOpen] = useState(defaultOpen)
 
-	function toggleOpen() {
-		setIsOpen(!isOpen)
-	}
-
 	function onChangeMainCheckbox() {
 		const currentMainCheckboxIsChecked = !mainCheckboxIsChecked
 		setCheckboxes(
-			checkboxes.map((checkbox) => {
-				if (checkbox.schemaDid === schema.did) {
-					return {
-						...checkbox,
-						checked: currentMainCheckboxIsChecked,
-					}
-				}
-				return checkbox
-			})
+			checkboxes.map((checkbox) => ({
+				...checkbox,
+				checked:
+					checkbox.schemaDid === schema.did
+						? currentMainCheckboxIsChecked
+						: checkbox.checked,
+			}))
 		)
 		setMainCheckboxIsChecked(currentMainCheckboxIsChecked)
 	}
@@ -54,7 +48,7 @@ function CheckboxListGroupContainer({
 			onChange={onChange}
 			checkboxes={checkboxes}
 			isOpen={isOpen}
-			toggleOpen={toggleOpen}
+			toggleOpen={() => setIsOpen(!isOpen)}
 		/>
 	)
 }

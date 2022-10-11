@@ -93,7 +93,7 @@ export interface onInputFileProps {
 }
 
 export interface objectsSelectionCheckbox {
+	schemaDid: string
 	cid: string
 	checked: boolean
-	schemaDid: string
 }
