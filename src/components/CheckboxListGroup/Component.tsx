@@ -1,4 +1,6 @@
 import { ChangeEvent, FC, useState } from "react"
+import IconArrowheadDown from "../../assets/svgs/IconArrowheadDown"
+import IconArrowheadUp from "../../assets/svgs/IconArrowheadUp"
 import { addDefaultFieldsToObjectsList } from "../../utils/mappings"
 import {
 	ListTypes,
@@ -66,7 +68,12 @@ const CheckboxListGroupComponent = ({
 					<span>{label}</span>
 				</label>
 
-				<div className="flex-1" onClick={() => setIsOpen(false)}></div>
+				<div
+					className="flex-1 flex items-center justify-end cursor-pointer px-4"
+					onClick={() => setIsOpen(false)}
+				>
+					<IconArrowheadUp />
+				</div>
 			</div>
 
 			<SearchableList
@@ -87,7 +94,12 @@ const CheckboxListGroupComponent = ({
 				<span>{label}</span>
 			</label>
 
-			<div className="flex-1" onClick={() => setIsOpen(true)}></div>
+			<div
+				className="flex-1 flex items-center justify-end cursor-pointer px-4"
+				onClick={() => setIsOpen(true)}
+			>
+				<IconArrowheadDown />
+			</div>
 		</div>
 	)
 }
