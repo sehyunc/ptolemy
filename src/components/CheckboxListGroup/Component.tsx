@@ -13,8 +13,6 @@ import SearchableList from "../SearchableList"
 interface CheckboxListGroupComponentProps {
 	schema: SchemaMeta
 	list: SonrObject[]
-	onChangeMainCheckbox: () => void
-	mainCheckboxIsChecked: boolean
 	onChange: (cid: string) => (checked: boolean) => void
 	toggleOpen: () => void
 	checkboxes: objectsSelectionCheckbox[]
@@ -24,8 +22,6 @@ interface CheckboxListGroupComponentProps {
 function CheckboxListGroupComponent({
 	schema,
 	list,
-	onChangeMainCheckbox,
-	mainCheckboxIsChecked,
 	onChange,
 	checkboxes,
 	isOpen,
@@ -67,6 +63,12 @@ function CheckboxListGroupComponent({
 		return newList
 	}
 
+	const onChangeTopCheckbox = () => {
+		const check = checkboxes.every((checkbox) => checkbox.checked)
+			? false
+			: true
+		checkboxes.map((checkbox) => onChange(checkbox.cid)(check))
+	}
 	return list.length === 0 ? (
 		<></>
 	) : isOpen ? (
@@ -75,8 +77,8 @@ function CheckboxListGroupComponent({
 				<label className="flex gap-4 px-4 py-2">
 					<input
 						type="checkbox"
-						checked={mainCheckboxIsChecked}
-						onChange={onChangeMainCheckbox}
+						checked={checkboxes.every((checkbox) => checkbox.checked)}
+						onChange={onChangeTopCheckbox}
 					/>
 					<span>{schema.label}</span>
 				</label>
@@ -96,8 +98,8 @@ function CheckboxListGroupComponent({
 			<label className="flex gap-4 px-4 py-2">
 				<input
 					type="checkbox"
-					checked={mainCheckboxIsChecked}
-					onChange={onChangeMainCheckbox}
+					checked={checkboxes.every((checkbox) => checkbox.checked)}
+					onChange={onChangeTopCheckbox}
 				/>
 				<span>{schema.label}</span>
 			</label>

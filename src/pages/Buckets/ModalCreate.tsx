@@ -52,21 +52,20 @@ const ModalCreateBucket = () => {
 		await dispatch(userGetAllObjects({ bucketDids }))
 	}
 
-	const onChangeObjectCheckbox =
+	const onChangeObject =
 		(schemaDid: string) => (cid: string) => (checked: boolean) => {
-			if (!cid) return
-			const index = checkboxes.findIndex(
-				(item) => item.cid === cid && item.schemaDid === schemaDid
+			setCheckboxes((checkboxes) =>
+				checkboxes.map((checkbox) => {
+					if (checkbox.cid !== cid || checkbox.schemaDid !== schemaDid) {
+						return checkbox
+					}
+
+					return {
+						...checkbox,
+						checked,
+					}
+				})
 			)
-
-			const newCheckboxes = [...checkboxes]
-			newCheckboxes.splice(index, 1, {
-				cid,
-				schemaDid,
-				checked,
-			})
-
-			setCheckboxes(newCheckboxes)
 		}
 
 	const save = async () => {
@@ -142,9 +141,10 @@ const ModalCreateBucket = () => {
 									<CheckboxListGroup
 										defaultOpen={index === 0}
 										schema={schema}
-										checkboxes={checkboxes}
-										setCheckboxes={setCheckboxes}
-										onChange={onChangeObjectCheckbox(schema.did)}
+										checkboxes={checkboxes.filter(
+											(checkbox) => checkbox.schemaDid === schema.did
+										)}
+										onChange={onChangeObject(schema.did)}
 										key={schema.did}
 									/>
 								))}
