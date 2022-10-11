@@ -5,7 +5,7 @@ import { BucketContent } from "../utils/types"
 const createBucket = async (
 	label: string,
 	address: string,
-	content?: BucketContent[]
+	content: BucketContent[]
 ) => {
 	const url = `${BASE_API}/api/v1/bucket/create`
 	const options = {
@@ -16,7 +16,7 @@ const createBucket = async (
 			creator: address,
 			role: "application",
 			visibility: "public",
-			...(content && { content }),
+			content,
 		}),
 	}
 

@@ -87,7 +87,7 @@ const ModalCreateBucket = () => {
 		const createBucketPayload = {
 			label,
 			address,
-			...(content.length > 0 && { content }),
+			content,
 		}
 
 		await dispatch(userCreateBucket(createBucketPayload))
