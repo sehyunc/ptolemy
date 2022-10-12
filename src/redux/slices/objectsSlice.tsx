@@ -3,7 +3,7 @@ import createObject from "../../service/createObject"
 import getObject from "../../service/getObject"
 import getObjectsFromBucket from "../../service/getObjectsFromBucket"
 import { replaceFileBase64StringOnObjectList } from "../../utils/mappings"
-import { InewObject, SonrObject, userGetObjectProps } from "../../utils/types"
+import { InewObject, SonrObject } from "../../utils/types"
 import { RootState } from "../store"
 
 export interface ObjectsState {
@@ -41,11 +41,15 @@ export const userGetBucketObjects = createAsyncThunk(
 	}
 )
 
+type userGetObjectProps = {
+	schemaDid: string
+	objectCid: string
+}
 export const userGetObject = createAsyncThunk(
 	"object/get",
 	async ({ schemaDid, objectCid }: userGetObjectProps, thunkAPI) => {
 		try {
-			return await getObject({ schemaDid, objectCid })
+			return await getObject(schemaDid, objectCid)
 		} catch (err) {
 			return thunkAPI.rejectWithValue(err)
 		}

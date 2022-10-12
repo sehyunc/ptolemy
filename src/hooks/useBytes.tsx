@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux"
 import { userGetObject } from "../redux/slices/objectsSlice"
 import { downloadFileFromBase64 } from "../utils/files"
 import { parseJsonFromBase64String } from "../utils/object"
+import { SonrObject } from "../utils/types"
 
 function useBytes() {
 	const dispatch: Function = useDispatch()
@@ -14,17 +15,14 @@ function useBytes() {
 		key: string
 		schemaDid: string
 	}) {
-		const { payload } = await dispatch(
+		const { payload: object }: { payload: SonrObject } = await dispatch(
 			userGetObject({
 				schemaDid,
 				objectCid: cid,
 			})
 		)
-		const bytes = payload?.object[key]?.["/"]?.bytes
-		if (!bytes) return
-
-		const parsedData = parseJsonFromBase64String(bytes)
-		const { base64File, fileName } = parsedData
+		const bytes = object.data[key]?.["/"]?.bytes
+		const { base64File, fileName } = parseJsonFromBase64String(bytes)
 		downloadFileFromBase64(base64File, fileName)
 	}
 

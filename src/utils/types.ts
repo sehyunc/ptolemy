@@ -67,6 +67,7 @@ export type SearchableListItemData = {
 	text?: string
 	Component?: FC<any>
 	props?: Record<string, any>
+	shrinkColumn?: boolean
 }
 
 export type SearchableListItem = {
@@ -81,18 +82,13 @@ export interface updateBucketProps {
 	schemaDid: string
 }
 
-export interface userGetObjectProps {
-	schemaDid: string
-	objectCid: string
-}
-
 export interface onInputFileProps {
 	file: File
 	onChange: (value: Record<string, any>) => void
 }
 
 export interface objectsSelectionCheckbox {
+	schemaDid: string
 	cid: string
 	checked: boolean
-	schemaDid: string
 }

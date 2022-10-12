@@ -1,120 +1,141 @@
-import { addDefaultFieldsToObjectsList } from "../../utils/mappings"
+import { ChangeEvent, FC, useState } from "react"
+import IconArrowheadDown from "../../assets/svgs/IconArrowheadDown"
+import IconArrowheadUp from "../../assets/svgs/IconArrowheadUp"
 import {
 	ListTypes,
-	SchemaMeta,
-	SearchableListType,
-	SearchableListItem,
 	SonrObject,
 	objectsSelectionCheckbox,
+	SchemaMeta,
+	SearchableListItem,
 } from "../../utils/types"
+import ByteTypeDownloadButton from "../ByteTypeDownloadButton"
 import SearchableList from "../SearchableList"
 
-interface CheckboxListGroupComponentProps {
+type Props = {
 	schema: SchemaMeta
-	list: SonrObject[]
-	onChangeMainCheckbox: (event: React.ChangeEvent<HTMLInputElement>) => void
-	mainCheckboxIsChecked: boolean
-	onChange: Function
-	toggleOpen: Function
+	objects: SonrObject[]
+	onChange: (cid: string) => (checked: boolean) => void
+	initialOpenState: boolean
 	checkboxes: objectsSelectionCheckbox[]
-	isOpen: boolean
 }
-
-interface renderCheckboxProps {
-	checkbox: objectsSelectionCheckbox
-	cid: string
-}
-
-function CheckboxListGroupComponent({
+const CheckboxListGroupComponent = ({
 	schema,
-	list,
-	onChangeMainCheckbox,
-	mainCheckboxIsChecked,
+	objects,
 	onChange,
 	checkboxes,
-	isOpen,
-	toggleOpen,
-}: CheckboxListGroupComponentProps) {
-	function renderCheckbox({ checkbox, cid }: renderCheckboxProps) {
-		return (
-			<div>
-				<input
-					checked={checkbox.checked}
-					type="checkbox"
-					onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-						onChange({
-							checked: event.target.checked,
-							cid,
-							schemaDid: schema.did,
-						})
-					}
-				/>
-			</div>
-		)
-	}
+	initialOpenState,
+}: Props) => {
+	const [isOpen, setIsOpen] = useState(initialOpenState)
 
-	function mapToListFormat(
-		objectsList: SonrObject[],
-		schemaDid: string
-	): SearchableListType {
-		const newList = objectsList
-			.filter((item: SonrObject) => item.schemaDid === schemaDid)
-			.map(({ cid, data }: SonrObject): SearchableListItem => {
-				const listItem: SearchableListItem = {}
-				const checkbox = checkboxes.find(
-					(checkbox) =>
-						checkbox.cid === cid && checkbox.schemaDid === schema.did
-				)
-				if (checkbox) {
-					listItem[""] = {
-						text: "",
-						Component: () => renderCheckbox({ checkbox, cid }),
-					}
+	const getList = () =>
+		objects.map((object) => {
+			const objectReducer =
+				(object: SonrObject) => (listItem: SearchableListItem, key: string) => {
+					const schemaField = schema.fields.find((field) => field.name === key)!
+					listItem[key] =
+						schemaField.type === 5
+							? {
+									text: "",
+									Component: ByteTypeDownloadButton,
+									props: {
+										cid: object.cid,
+										schemaDid: schema.did,
+										itemKey: key,
+									},
+							  }
+							: {
+									text: object.data[key],
+							  }
+					return listItem
 				}
 
-				return addDefaultFieldsToObjectsList({
-					fields: data,
-					cid,
-					schemaDid,
-					listItem,
-				})
-			})
+			const initial = {
+				"": {
+					Component: CheckboxElement,
+					props: {
+						checked: checkboxes.find((checkbox) => checkbox.cid === object.cid)!
+							.checked,
+						onChange: onChange(object.cid),
+					},
+					shrinkColumn: true,
+				},
+			}
+			return Object.keys(object.data).reduce(objectReducer(object), initial)
+		})
 
-		return newList
+	const onChangeTopCheckbox = () => {
+		const check = checkboxes.every((checkbox) => checkbox.checked)
+			? false
+			: true
+		checkboxes.map((checkbox) => onChange(checkbox.cid)(check))
 	}
-
-	return (
-		<div className="flex flex-col justify-start items-start">
-			<div
-				className={`flex w-full
-				${
-					isOpen
-						? "rounded-t-md text-white bg-surface-button-subtle-hovered"
-						: "bg-surface-button-subtle rounded-md"
-				}
-			`}
-			>
-				<label className="flex items-center px-4">
+	return objects.length === 0 ? (
+		<></>
+	) : isOpen ? (
+		<div className="flex flex-col mb-4 px-2">
+			<div className="flex bg-surface-button-subtle-hovered text-white rounded-t-md">
+				<label className="flex gap-4 px-4 py-2">
 					<input
 						type="checkbox"
-						checked={mainCheckboxIsChecked}
-						onChange={onChangeMainCheckbox}
+						checked={checkboxes.every((checkbox) => checkbox.checked)}
+						onChange={onChangeTopCheckbox}
 					/>
-					<span className="block ml-4">{schema.label}</span>
+					<span>{schema.label}</span>
 				</label>
+
 				<div
-					onClick={() => toggleOpen()}
-					className="h-10 w-full cursor-pointer"
-				/>
+					className="flex-1 flex items-center justify-end cursor-pointer px-4"
+					onClick={() => setIsOpen(false)}
+				>
+					<IconArrowheadUp />
+				</div>
 			</div>
-			<div className={`w-full ${!isOpen ? "hidden" : ""}`}>
-				<SearchableList
-					hideSearchBar={true}
-					initialList={mapToListFormat(list, schema.did)}
-					type={ListTypes.object}
-					loading={false}
+
+			<SearchableList
+				hideSearchBar={true}
+				initialList={getList()}
+				type={ListTypes.object}
+				loading={false}
+			/>
+		</div>
+	) : (
+		<div className="flex bg-surface-button-subtle-hovered text-white rounded-md mx-2 mb-4">
+			<label className="flex gap-4 px-4 py-2">
+				<input
+					type="checkbox"
+					checked={checkboxes.every((checkbox) => checkbox.checked)}
+					onChange={onChangeTopCheckbox}
 				/>
+				<span>{schema.label}</span>
+			</label>
+
+			<div
+				className="flex-1 flex items-center justify-end cursor-pointer px-4"
+				onClick={() => setIsOpen(true)}
+			>
+				<IconArrowheadDown />
 			</div>
+		</div>
+	)
+}
+
+type CheckboxElementProps = {
+	checked: boolean
+	onChange: (checked: boolean) => void
+}
+const CheckboxElement: FC<CheckboxElementProps> = ({
+	checked,
+	onChange,
+}: CheckboxElementProps) => {
+	return (
+		<div>
+			<input
+				checked={checked}
+				type="checkbox"
+				onChange={(event: ChangeEvent<HTMLInputElement>) =>
+					onChange(event.target.checked)
+				}
+			/>
 		</div>
 	)
 }

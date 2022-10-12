@@ -1,5 +1,4 @@
-import ByteTypeDownloadButton from "../components/ByteTypeDownloadButton"
-import { ObjectData, SearchableListItem, SonrObject } from "./types"
+import { SonrObject } from "./types"
 
 export interface IschemaTypeMap {
 	list: number
@@ -71,43 +70,4 @@ export function replaceFileBase64StringOnObjectList(objects: SonrObject[]) {
 			},
 		]
 	}, [])
-}
-
-interface addDefaultFieldsToObjectsListProps {
-	fields: ObjectData
-	cid: string
-	schemaDid: string
-	listItem?: SearchableListItem
-}
-
-export function addDefaultFieldsToObjectsList({
-	fields,
-	cid,
-	schemaDid,
-	listItem = {},
-}: addDefaultFieldsToObjectsListProps) {
-	listItem.cid = { text: cid }
-
-	Object.keys(fields).forEach((key) => {
-		if (fields[key]?.bytes) {
-			listItem[key] = {
-				text: "",
-				Component: () => {
-					return (
-						<ByteTypeDownloadButton
-							cid={cid}
-							itemKey={key}
-							schemaDid={schemaDid}
-						/>
-					)
-				},
-			}
-		} else {
-			listItem[key] = {
-				text: fields[key].toString(),
-			}
-		}
-	})
-
-	return listItem
 }

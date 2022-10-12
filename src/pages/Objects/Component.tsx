@@ -9,14 +9,15 @@ import {
 	Bucket,
 } from "../../utils/types"
 import LoadingCircleSvg from "../../assets/svgs/LoadingCircle"
+import { Dispatch, SetStateAction } from "react"
 
 interface ObjectsPageComponentProps {
 	schemas: Array<SchemaMeta>
 	buckets: Array<Bucket>
 	selectedSchema: string
 	selectedBucket: string
-	setSelectedSchema: React.Dispatch<React.SetStateAction<string>>
-	setSelectedBucket: React.Dispatch<React.SetStateAction<string>>
+	setSelectedSchema: Dispatch<SetStateAction<string>>
+	setSelectedBucket: Dispatch<SetStateAction<string>>
 	openNewObjectModal: () => void
 	loading: boolean
 	schemaCount: number
@@ -39,15 +40,17 @@ const ObjectsPageComponent = ({
 }: ObjectsPageComponentProps) => {
 	return (
 		<LayoutMenu>
-			<div className="h-screen font-extrabold w-full bg-gray-100 px-10 pb-10 overflow-auto">
-				<div className="flex justify-between items-center mt-14 mb-8">
-					<h1 className="text-custom-3xl tracking-custom-x2tighter text-default">
+			<div className="py-14 px-10">
+				<div className="flex justify-between items-center gap-4 mb-8">
+					<h1 className="text-custom-3xl tracking-custom-x2tighter font-extrabold text-default">
 						Objects
 					</h1>
-					<div className="flex w-full justify-end">
+
+					<div className="flex w-full justify-end gap-4">
 						{schemaCount > 0 && (
-							<div className="flex w-3/12 flex-col items-start justify-center">
+							<div className="flex w-40 flex-col items-start justify-center">
 								<div className="mb-2">Schema</div>
+
 								<div className="relative pointer-events-none select-none border border-default-border rounded-md w-full cursor-pointer flex justify-between">
 									<select
 										className="appearance-none py-2 px-3 rounded-md pointer-events-auto cursor-pointer w-full"
@@ -63,6 +66,7 @@ const ObjectsPageComponent = ({
 											All
 										</option>
 									</select>
+
 									<NebulaIcon
 										iconName="ArrowSquareDown"
 										iconType="duotone"
@@ -71,9 +75,11 @@ const ObjectsPageComponent = ({
 								</div>
 							</div>
 						)}
+
 						{bucketCount > 0 && (
-							<div className="ml-4 flex w-3/12 flex-col items-start justify-center">
+							<div className="flex w-40 flex-col items-start justify-center">
 								<div className="mb-2">Bucket</div>
+
 								<div className="relative pointer-events-none select-none border border-default-border rounded-md w-full cursor-pointer flex justify-between">
 									<select
 										className="appearance-none py-2 px-3 rounded-md pointer-events-auto cursor-pointer w-full"
@@ -86,6 +92,7 @@ const ObjectsPageComponent = ({
 											</option>
 										))}
 									</select>
+
 									<NebulaIcon
 										iconName="ArrowSquareDown"
 										iconType="duotone"
@@ -96,6 +103,7 @@ const ObjectsPageComponent = ({
 						)}
 					</div>
 				</div>
+
 				{loading && (
 					<div className="w-full flex justify-center mt-20">
 						<div className="w-28 animate-spin flex justify-center items-center">
@@ -103,6 +111,7 @@ const ObjectsPageComponent = ({
 						</div>
 					</div>
 				)}
+
 				<div className={`${loading ? "hidden" : ""}`}>
 					{list.length > 0 ? (
 						<SearchableList

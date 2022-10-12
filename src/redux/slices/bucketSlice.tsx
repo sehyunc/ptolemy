@@ -68,7 +68,7 @@ export const userCreateBucket = createAsyncThunk(
 			label,
 			address,
 			content,
-		}: { label: string; address: string; content?: BucketContent[] },
+		}: { label: string; address: string; content: BucketContent[] },
 		thunkAPI
 	) => {
 		try {

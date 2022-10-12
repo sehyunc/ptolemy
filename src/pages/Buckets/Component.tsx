@@ -26,43 +26,41 @@ const BucketsPageComponent = ({ data, loading }: Props) => {
 
 	return (
 		<LayoutMenu>
-			<div className="h-screen bg-gray-100">
-				<div className="py-14 px-10">
-					<div className="flex flex-row">
-						<h1 className="flex-1 text-custom-3xl font-extrabold tracking-custom-x2tighter text-default">
-							Buckets
-						</h1>
-
-						{!loading && (
-							<button
-								className="self-center text-skin-primary bg-skin-primary font-extrabold rounded py-2 px-6"
-								onClick={openNewBucketModal}
-							>
-								Create Bucket
-							</button>
-						)}
-					</div>
-
-					{loading && (
-						<div className="w-full flex justify-center mt-20">
-							<div className="w-28 animate-spin flex justify-center items-center">
-								<LoadingCircleSvg />
-							</div>
-						</div>
-					)}
+			<div className="py-14 px-10">
+				<div className="flex flex-row gap-2">
+					<h1 className="flex-1 text-custom-3xl tracking-custom-x2tighter font-extrabold text-default">
+						Buckets
+					</h1>
 
 					{!loading && (
-						<>
-							{!data.length && <EmptyList message="No Buckets to Display" />}
-
-							{!!data.length && (
-								<div className="flex flex-wrap gap-6 mt-8">
-									{data.map(BucketCard)}
-								</div>
-							)}
-						</>
+						<button
+							className="self-center text-skin-primary bg-skin-primary font-extrabold rounded py-2 px-6"
+							onClick={openNewBucketModal}
+						>
+							Create Bucket
+						</button>
 					)}
 				</div>
+
+				{loading && (
+					<div className="w-full flex justify-center mt-20">
+						<div className="w-28 animate-spin flex justify-center items-center">
+							<LoadingCircleSvg />
+						</div>
+					</div>
+				)}
+
+				{!loading && (
+					<>
+						{!data.length && <EmptyList message="No Buckets to Display" />}
+
+						{!!data.length && (
+							<div className="flex flex-wrap gap-6 mt-8">
+								{data.map(BucketCard)}
+							</div>
+						)}
+					</>
+				)}
 			</div>
 		</LayoutMenu>
 	)

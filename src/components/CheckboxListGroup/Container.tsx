@@ -1,60 +1,32 @@
-import { useState } from "react"
-import { useSelector } from "react-redux"
-import { selectAllObjects } from "../../redux/slices/bucketSlice"
-import { objectsSelectionCheckbox, SchemaMeta } from "../../utils/types"
+import {
+	objectsSelectionCheckbox,
+	SchemaMeta,
+	SonrObject,
+} from "../../utils/types"
 import CheckboxListGroupComponent from "./Component"
 
 interface CheckboxListGroupContainerProps {
 	schema: SchemaMeta
+	objects: SonrObject[]
 	checkboxes: objectsSelectionCheckbox[]
-	setCheckboxes: React.Dispatch<
-		React.SetStateAction<objectsSelectionCheckbox[]>
-	>
-	onChange: Function
-	defaultOpen: boolean
+	onChange: (cid: string) => (checked: boolean) => void
+	initialOpenState: boolean
 }
 
-function CheckboxListGroupContainer({
+const CheckboxListGroupContainer = ({
 	schema,
+	objects,
 	checkboxes,
-	setCheckboxes,
 	onChange,
-	defaultOpen,
-}: CheckboxListGroupContainerProps) {
-	const allObjects = useSelector(selectAllObjects)
-	const [mainCheckboxIsChecked, setMainCheckboxIsChecked] = useState(false)
-	const [isOpen, setIsOpen] = useState(defaultOpen)
-
-	function toggleOpen() {
-		setIsOpen(!isOpen)
-	}
-
-	function onChangeMainCheckbox() {
-		const currentMainCheckboxIsChecked = !mainCheckboxIsChecked
-		setCheckboxes(
-			checkboxes.map((checkbox) => {
-				if (checkbox.schemaDid === schema.did) {
-					return {
-						...checkbox,
-						checked: currentMainCheckboxIsChecked,
-					}
-				}
-				return checkbox
-			})
-		)
-		setMainCheckboxIsChecked(currentMainCheckboxIsChecked)
-	}
-
+	initialOpenState,
+}: CheckboxListGroupContainerProps) => {
 	return (
 		<CheckboxListGroupComponent
 			schema={schema}
-			list={allObjects}
-			onChangeMainCheckbox={onChangeMainCheckbox}
-			mainCheckboxIsChecked={mainCheckboxIsChecked}
+			objects={objects}
 			onChange={onChange}
 			checkboxes={checkboxes}
-			isOpen={isOpen}
-			toggleOpen={toggleOpen}
+			initialOpenState={initialOpenState}
 		/>
 	)
 }
