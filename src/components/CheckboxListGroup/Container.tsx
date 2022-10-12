@@ -1,9 +1,12 @@
-import { objectsSelectionCheckbox, SonrObject } from "../../utils/types"
+import {
+	objectsSelectionCheckbox,
+	SchemaMeta,
+	SonrObject,
+} from "../../utils/types"
 import CheckboxListGroupComponent from "./Component"
 
 interface CheckboxListGroupContainerProps {
-	label: string
-	schemaDid: string
+	schema: SchemaMeta
 	objects: SonrObject[]
 	checkboxes: objectsSelectionCheckbox[]
 	onChange: (cid: string) => (checked: boolean) => void
@@ -11,8 +14,7 @@ interface CheckboxListGroupContainerProps {
 }
 
 const CheckboxListGroupContainer = ({
-	label,
-	schemaDid,
+	schema,
 	objects,
 	checkboxes,
 	onChange,
@@ -20,8 +22,7 @@ const CheckboxListGroupContainer = ({
 }: CheckboxListGroupContainerProps) => {
 	return (
 		<CheckboxListGroupComponent
-			label={label}
-			schemaDid={schemaDid}
+			schema={schema}
 			objects={objects}
 			onChange={onChange}
 			checkboxes={checkboxes}

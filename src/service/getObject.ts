@@ -6,6 +6,7 @@ const getObject = async ({
 	objectCid,
 }: userGetObjectProps): Promise<SonrObject[]> => {
 	try {
+		// TODO add test for this on smoke detector
 		const response = await fetch(`${BASE_API}/api/v1/object/get`, {
 			method: "POST",
 			headers: { "content-type": "application/json" },

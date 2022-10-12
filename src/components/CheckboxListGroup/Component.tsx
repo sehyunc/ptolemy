@@ -1,25 +1,25 @@
 import { ChangeEvent, FC, useState } from "react"
 import IconArrowheadDown from "../../assets/svgs/IconArrowheadDown"
 import IconArrowheadUp from "../../assets/svgs/IconArrowheadUp"
-import { addDefaultFieldsToObjectsList } from "../../utils/mappings"
 import {
 	ListTypes,
 	SonrObject,
 	objectsSelectionCheckbox,
+	SchemaMeta,
+	SearchableListItem,
 } from "../../utils/types"
+import ByteTypeDownloadButton from "../ByteTypeDownloadButton"
 import SearchableList from "../SearchableList"
 
 type Props = {
-	label: string
-	schemaDid: string
+	schema: SchemaMeta
 	objects: SonrObject[]
 	onChange: (cid: string) => (checked: boolean) => void
 	initialOpenState: boolean
 	checkboxes: objectsSelectionCheckbox[]
 }
 const CheckboxListGroupComponent = ({
-	label,
-	schemaDid,
+	schema,
 	objects,
 	onChange,
 	checkboxes,
@@ -27,26 +27,41 @@ const CheckboxListGroupComponent = ({
 }: Props) => {
 	const [isOpen, setIsOpen] = useState(initialOpenState)
 
-	const mapToListFormat = (objects: SonrObject[]) =>
-		objects
-			.map((object) => ({
-				fields: object.data,
-				cid: object.cid,
-				schemaDid,
-				listItem: {
-					"": {
-						Component: CheckboxElement,
-						props: {
-							checked: checkboxes.find(
-								(checkbox) => checkbox.cid === object.cid
-							)!.checked,
-							onChange: onChange(object.cid),
-						},
-						shrinkColumn: true,
+	const getList = () =>
+		objects.map((object) => {
+			const objectReducer =
+				(object: SonrObject) => (listItem: SearchableListItem, key: string) => {
+					const schemaField = schema.fields.find((field) => field.name === key)!
+					listItem[key] =
+						schemaField.type === 5
+							? {
+									text: "",
+									Component: ByteTypeDownloadButton,
+									props: {
+										cid: object.cid,
+										schemaDid: schema.did,
+										itemKey: key,
+									},
+							  }
+							: {
+									text: object.data[key],
+							  }
+					return listItem
+				}
+
+			const initial = {
+				"": {
+					Component: CheckboxElement,
+					props: {
+						checked: checkboxes.find((checkbox) => checkbox.cid === object.cid)!
+							.checked,
+						onChange: onChange(object.cid),
 					},
+					shrinkColumn: true,
 				},
-			}))
-			.map(addDefaultFieldsToObjectsList)
+			}
+			return Object.keys(object.data).reduce(objectReducer(object), initial)
+		})
 
 	const onChangeTopCheckbox = () => {
 		const check = checkboxes.every((checkbox) => checkbox.checked)
@@ -65,7 +80,7 @@ const CheckboxListGroupComponent = ({
 						checked={checkboxes.every((checkbox) => checkbox.checked)}
 						onChange={onChangeTopCheckbox}
 					/>
-					<span>{label}</span>
+					<span>{schema.label}</span>
 				</label>
 
 				<div
@@ -78,7 +93,7 @@ const CheckboxListGroupComponent = ({
 
 			<SearchableList
 				hideSearchBar={true}
-				initialList={mapToListFormat(objects)}
+				initialList={getList()}
 				type={ListTypes.object}
 				loading={false}
 			/>
@@ -91,7 +106,7 @@ const CheckboxListGroupComponent = ({
 					checked={checkboxes.every((checkbox) => checkbox.checked)}
 					onChange={onChangeTopCheckbox}
 				/>
-				<span>{label}</span>
+				<span>{schema.label}</span>
 			</label>
 
 			<div

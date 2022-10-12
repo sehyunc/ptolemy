@@ -139,8 +139,7 @@ const ModalCreateBucket = () => {
 								</span>
 								{schemas.map((schema, index) => (
 									<CheckboxListGroup
-										label={schema.label}
-										schemaDid={schema.did}
+										schema={schema}
 										objects={allObjects.filter(
 											(object) => object.schemaDid === schema.did
 										)}
