@@ -5,7 +5,7 @@ import { AppSettingsContext } from "../../../contexts/appSettingsContext/appSett
 
 interface Ibutton {
 	label?: string
-	iconName: string
+	icon: string
 	route: string
 }
 
@@ -38,7 +38,7 @@ function ButtonGroup({
 					{title}
 				</span>
 			</div>
-			{buttons.map(({ label, iconName, route }, index) => {
+			{buttons.map(({ label, icon, route }, index) => {
 				return (
 					<Button
 						key={`${label}-${index}`}
@@ -48,7 +48,7 @@ function ButtonGroup({
 						`}
 						skin={route === currentPath ? "primary" : ""}
 						label={!menuIsCollapsed ? label : ""}
-						iconName={iconName}
+						iconName={icon}
 						iconType={route === currentPath ? "duotone" : "outline"}
 						onClick={() => navigate(route)}
 					/>

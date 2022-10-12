@@ -17,37 +17,27 @@ import AlertSvg from "../../assets/svgs/Alert"
 import MenuLink from "./components/MenuLink"
 import IconUserProfile from "../../assets/svgs/IconUserProfile"
 
-const modulesButtons = [
-	{
-		label: "Schemas",
-		iconName: "Note1",
-		route: ROUTE_SCHEMAS,
-	},
-	{
-		label: "Objects",
-		iconName: "Box1",
-		route: ROUTE_OBJECTS,
-	},
-	{
-		label: "Buckets",
-		iconName: "Bag2",
-		route: ROUTE_BUCKETS,
-	},
-]
-
-interface SideMenuComponentCollapsedProps {
+type LinkData = {
+	route: string
+	label: string
+	icon: string
+}
+type Props = {
 	navigate: NavigateFunction
 	currentPath: string
 	onLogout: () => void
 	onChangeSize: () => void
+	pageLinks: LinkData[]
+	externalLinks: LinkData[]
 }
-
 function SideMenuComponentCollapsed({
 	navigate,
 	currentPath,
 	onLogout,
 	onChangeSize,
-}: SideMenuComponentCollapsedProps) {
+	pageLinks,
+	externalLinks,
+}: Props) {
 	const address = useSelector(selectAddress)
 	const alias = useSelector(selectAlias)
 
@@ -55,7 +45,7 @@ function SideMenuComponentCollapsed({
 		<div className="w-28 dark text-default flex flex-col bg-brand-tertiary h-screen px-4 py-[42px] shrink-0 z-10">
 			<div
 				onClick={onChangeSize}
-				className="justify-center flex  items-center w-full mb-10 cursor-pointer"
+				className="justify-center flex items-center w-full mb-10 cursor-pointer"
 			>
 				<div className="flex justify-center">
 					<div className="w-11 h-11">
@@ -71,13 +61,14 @@ function SideMenuComponentCollapsed({
 					title="Modules"
 					navigate={navigate}
 					currentPath={currentPath}
-					buttons={modulesButtons}
+					buttons={pageLinks}
 					className="mb-10"
 				/>
 
 				<div className="text-custom-2xs uppercase font-semibold text-subdued mb-6">
 					Tools
 				</div>
+
 				<MenuLink
 					label="Access API"
 					href="/docs/index.html"

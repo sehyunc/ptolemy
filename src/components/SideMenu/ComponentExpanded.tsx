@@ -1,11 +1,6 @@
 import SonrLogoSvg from "../../assets/svgs/SonrLogo"
 import ButtonGroup from "./components/ButtonsGroup"
 import { NavigateFunction } from "react-router-dom"
-import {
-	ROUTE_OBJECTS,
-	ROUTE_SCHEMAS,
-	ROUTE_BUCKETS,
-} from "../../utils/constants"
 import { useSelector } from "react-redux"
 import {
 	selectAddress,
@@ -18,37 +13,27 @@ import LeftSquareIconSvg from "../../assets/svgs/LeftSquaredIcon"
 import MenuLink from "./components/MenuLink"
 import IconUserProfile from "../../assets/svgs/IconUserProfile"
 
-const modulesButtons = [
-	{
-		label: "Schemas",
-		iconName: "Note1",
-		route: ROUTE_SCHEMAS,
-	},
-	{
-		label: "Objects",
-		iconName: "Box1",
-		route: ROUTE_OBJECTS,
-	},
-	{
-		label: "Buckets",
-		iconName: "Bag2",
-		route: ROUTE_BUCKETS,
-	},
-]
-
-interface SideMenuComponentExpandedProps {
+type LinkData = {
+	route: string
+	label: string
+	icon: string
+}
+type Props = {
 	navigate: NavigateFunction
 	currentPath: string
 	onLogout: () => void
 	onChangeSize: () => void
+	pageLinks: LinkData[]
+	externalLinks: LinkData[]
 }
-
 function SideMenuComponentExpanded({
 	navigate,
 	currentPath,
 	onLogout,
 	onChangeSize,
-}: SideMenuComponentExpandedProps) {
+	pageLinks,
+	externalLinks,
+}: Props) {
 	const address = useSelector(selectAddress)
 	const alias = useSelector(selectAlias)
 
@@ -77,13 +62,14 @@ function SideMenuComponentExpanded({
 					title="Modules"
 					navigate={navigate}
 					currentPath={currentPath}
-					buttons={modulesButtons}
+					buttons={pageLinks}
 					className="mb-10"
 				/>
 
 				<div className="text-custom-2xs uppercase font-semibold text-subdued mb-6">
 					Tools
 				</div>
+
 				<MenuLink
 					label="Access API"
 					href="/docs/index.html"
