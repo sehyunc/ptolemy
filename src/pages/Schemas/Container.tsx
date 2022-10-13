@@ -10,12 +10,11 @@ import {
 import { AppDispatch } from "../../redux/store"
 import { MODAL_CONTENT_NEW_SCHEMA } from "../../utils/constants"
 import {
-	SearchableList,
+	SearchableListType,
 	SearchableListItem,
 	SchemaMeta,
 } from "../../utils/types"
 import SchemasPageComponent from "./Component"
-import EmptyList from "./components/EmptyList"
 import ViewProperties from "./components/ViewProperties"
 
 function SchemasPageContainer() {
@@ -27,7 +26,6 @@ function SchemasPageContainer() {
 
 	useEffect(() => {
 		dispatch(userGetAllSchemas(address))
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	function openNewSchemaModal() {
@@ -35,7 +33,7 @@ function SchemasPageContainer() {
 		openModal()
 	}
 
-	function mapToListFormat(list: Array<SchemaMeta>): SearchableList {
+	function mapToListFormat(list: Array<SchemaMeta>): SearchableListType {
 		return list.map((item: SchemaMeta): SearchableListItem => {
 			return {
 				"Schema name": {
@@ -56,18 +54,12 @@ function SchemasPageContainer() {
 	}
 
 	return (
-		<>
-			{schemaMetadata && schemaMetadata.length > 0 ? (
-				<SchemasPageComponent
-					openNewSchemaModal={openNewSchemaModal}
-					list={mapToListFormat(schemaMetadata)}
-					searchableAndSortableFieldKey="Schema name"
-					loading={loading}
-				/>
-			) : (
-				<EmptyList openNewSchemaModal={openNewSchemaModal} loading={loading} />
-			)}
-		</>
+		<SchemasPageComponent
+			openNewSchemaModal={openNewSchemaModal}
+			list={mapToListFormat(schemaMetadata)}
+			searchableAndSortableFieldKey="Schema name"
+			loading={loading}
+		/>
 	)
 }
 

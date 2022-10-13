@@ -19,11 +19,13 @@ const fieldTypeMap = {
 	2: "INT",
 	3: "FLOAT",
 	4: "STRING",
+	5: "BYTES",
 }
 
 const app = express()
 app.use(cors())
-app.use(bodyParser.json())
+app.use(bodyParser.json({ limit: "1mb" }))
+app.use(bodyParser.urlencoded({ limit: "1mb", extended: true }))
 
 /// DEVELOPMENT
 
@@ -82,12 +84,7 @@ app.post("/api/v1/account/login", async ({ body }, res) => {
 })
 
 app.get("/api/v1/account/info", async (_, res) => {
-	const sessionAddress = await storage.getItem("sessionAddress")
-	if (!sessionAddress) {
-		res.status(500).send()
-		return
-	}
-
+	const sessionAddress = (await storage.getItem("sessionAddress")) || ""
 	res.json({ Address: sessionAddress })
 })
 
@@ -133,16 +130,15 @@ app.post("/api/v1/alias/buy", async (req, res) => {
 app.post("/api/v1/schema/create", async ({ body }, res) => {
 	const did = generateDid()
 	const sessionAddress = await storage.getItem("sessionAddress")
-	const creator = addressToDid(sessionAddress)
 
 	const schemaMetadata = {
-		creator,
+		creator: sessionAddress,
 		schema: {
 			did,
 			label: body.label,
 			fields: _.map(_.keys(body.fields), (name) => ({
 				name,
-				field: fieldTypeMap[body.fields[name]],
+				field: body.fields[name] !== 0 ? body.fields[name] : undefined,
 			})),
 		},
 	}
@@ -152,7 +148,19 @@ app.post("/api/v1/schema/create", async ({ body }, res) => {
 
 	await storage.setItem("schemaMetadata", allMetadata)
 
-	res.json({ whatIs: schemaMetadata })
+	res.json({ what_is: schemaMetadata })
+})
+
+app.post("/api/v1/schema/get-from-creator", async (req, res) => {
+	const allMetadata = (await storage.getItem("schemaMetadata")) || []
+	const metadata = _.filter(allMetadata, { creator: req.body.creator })
+
+	if (metadata.length === 0) {
+		res.status(500).send()
+		return
+	}
+
+	res.json({ what_is: metadata })
 })
 
 /// BUCKETS
@@ -163,8 +171,11 @@ app.post("/api/v1/bucket/create", async ({ body }, res) => {
 		did,
 		label: body.label,
 		creator: body.creator,
-		timestamp: Date.now(),
-		content: [],
+		timestamp: Math.round(Date.now() / 1000),
+		content: _.map(body.content, (c) => ({
+			uri: c.uri,
+			schema_did: c.schemaDid,
+		})),
 	}
 
 	const allBuckets = (await storage.getItem("buckets")) || []
@@ -225,13 +236,25 @@ app.post("/api/v1/bucket/get", async ({ body }, res) => {
 	res.json({ bucket: contents })
 })
 
+app.post("/api/v1/bucket/get-from-creator", async (req, res) => {
+	const allBuckets = (await storage.getItem("buckets")) || []
+	const buckets = _.chain(allBuckets)
+		.filter({ creator: req.body.creator })
+		.map((bucket) => ({
+			...bucket,
+			content: bucket.content.length > 0 ? bucket.content : undefined,
+		}))
+		.valueOf()
+	res.json({ where_is: buckets.length > 0 ? buckets : undefined })
+})
+
 /// OBJECTS
 
 app.post("/api/v1/object/build", async ({ body }, res) => {
 	const allSchemaMetadata = await storage.getItem("schemaMetadata")
 	const schemaMetadata = _.find(
 		allSchemaMetadata,
-		(meta) => (meta.schema.did = body.schemaDid)
+		(meta) => meta.schema.did === body.schemaDid
 	)
 
 	const fieldsExpected = _.map(schemaMetadata.schema.fields, "name")
@@ -245,7 +268,13 @@ app.post("/api/v1/object/build", async ({ body }, res) => {
 		.keys()
 		.sortBy()
 		.reduce((acc, key) => {
-			acc[key] = body.object[key]
+			const fieldType = _.find(schemaMetadata.schema.fields, {
+				name: key,
+			}).field
+			acc[key] =
+				fieldType === 5
+					? { "/": { bytes: _.trimEnd(body.object[key].bytes, "=") } }
+					: body.object[key]
 			return acc
 		}, {})
 		.valueOf()
@@ -259,11 +288,9 @@ app.post("/api/v1/object/build", async ({ body }, res) => {
 	await storage.setItem(objectStoreKey(cid), object)
 
 	res.json({
-		objectUpload: {
-			reference: {
-				cid,
-				Label: body.label,
-			},
+		reference: {
+			cid,
+			Label: body.label,
 		},
 	})
 })
@@ -271,18 +298,6 @@ app.post("/api/v1/object/build", async ({ body }, res) => {
 app.post("/api/v1/object/get", async ({ body }, res) => {
 	const object = await storage.getItem(objectStoreKey(body.objectCid))
 	res.json({ object: object })
-})
-
-/// CHAIN PROXY
-
-app.get("/proxy/schemas", async (_, res) => {
-	const metadata = (await storage.getItem("schemaMetadata")) || []
-	res.json({ what_is: metadata })
-})
-
-app.get("/proxy/buckets", async (_, res) => {
-	const buckets = (await storage.getItem("buckets")) || []
-	res.json({ where_is: buckets })
 })
 
 export default app

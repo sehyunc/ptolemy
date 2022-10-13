@@ -1,5 +1,5 @@
 import { NebulaIcon } from "@sonr-io/nebula-react"
-import React from "react"
+import { ChangeEvent, Dispatch, SetStateAction } from "react"
 import {
 	ListTypes,
 	SearchableListItemData,
@@ -16,10 +16,11 @@ interface SearchableListComponentProps {
 	nextPage: () => void
 	previousPage: () => void
 	orderAsc: boolean
-	setPaginationCurrentPage: React.Dispatch<React.SetStateAction<number>>
-	setSearchTerm: React.Dispatch<React.SetStateAction<string>>
+	setPaginationCurrentPage: Dispatch<SetStateAction<number>>
+	setSearchTerm: Dispatch<SetStateAction<string>>
 	totalPages: number
 	onClickNewItem?: () => void
+	hideSearchBar?: boolean
 }
 
 function SearchableListComponent({
@@ -33,31 +34,34 @@ function SearchableListComponent({
 	totalPages,
 	setSearchTerm,
 	onClickNewItem,
+	hideSearchBar,
 }: SearchableListComponentProps) {
 	const isFirstPage = paginationCurrentPage === 1
 	const isLastPage = paginationCurrentPage === totalPages
 	const previousPageButtonClass = isFirstPage ? "opacity-40" : "cursor-pointer"
 	const nextPageButtonClass = isLastPage ? "opacity-40" : "cursor-pointer"
-	const onChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+	const onChange = (event: ChangeEvent<HTMLInputElement>) =>
 		setSearchTerm(event.target.value)
 
 	return (
-		<div className="shadow-3xl rounded-2xl bg-white">
-			<div className="flex justify-between p-6 w-full">
-				<input
-					onChange={onChange}
-					className="border border-default rounded-full px-4 py-2 font-normal w-80 mr-4"
-					placeholder="Search"
-				/>
-				{onClickNewItem && (
-					<button
-						className="text-skin-primary bg-skin-primary rounded px-4"
-						onClick={onClickNewItem}
-					>
-						New
-					</button>
-				)}
-			</div>
+		<div className="shadow-3xl rounded-md bg-white w-full">
+			{!hideSearchBar && (
+				<div className="flex justify-between p-6 w-full">
+					<input
+						onChange={onChange}
+						className="border border-default rounded-full px-4 py-2 font-normal w-80 mr-4"
+						placeholder="Search"
+					/>
+					{onClickNewItem && (
+						<button
+							className="text-skin-primary font-extrabold bg-skin-primary rounded px-4"
+							onClick={onClickNewItem}
+						>
+							New
+						</button>
+					)}
+				</div>
+			)}
 			<div className={`${type === ListTypes.schema ? "" : "overflow-auto"}`}>
 				<table className="text-left w-full">
 					<thead>
@@ -79,9 +83,13 @@ function SearchableListComponent({
 											text = "",
 											Component,
 											props,
+											shrinkColumn,
 										} = row[key] as SearchableListItemData
 										return (
-											<td className="px-4 py-5" key={`${key}-${itemIndex}`}>
+											<td
+												className={`px-4 py-5 ${shrinkColumn ? "w-0" : ""}`}
+												key={`${key}-${itemIndex}`}
+											>
 												{text}
 												{Component && <Component {...props} />}
 											</td>

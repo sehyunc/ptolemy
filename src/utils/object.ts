@@ -1,3 +1,5 @@
+const Buffer = require("buffer/").Buffer
+
 export function isEmptyObject(obj: Record<string, any>) {
 	return (
 		obj &&
@@ -6,13 +8,10 @@ export function isEmptyObject(obj: Record<string, any>) {
 	)
 }
 
-export function arrayObjectDistinct(
-	arr: Array<Record<string, any>>,
-	key: string
-) {
+export function arrayObjectDistinct(arr: any[], key: string) {
 	const uniqueIds: Array<boolean> = []
 
-	return arr.filter((element: Record<string, any>) => {
+	return arr.filter((element: any) => {
 		const isDuplicate = uniqueIds.includes(element[key])
 
 		if (!isDuplicate) {
@@ -30,4 +29,8 @@ export function parseJsonFromBase64String(string: string) {
 		console.error(error)
 		return {}
 	}
+}
+
+export function objectToBase64(obj: Record<string, any>) {
+	return Buffer.from(JSON.stringify(obj)).toString("base64")
 }

@@ -1,7 +1,9 @@
 import { useContext, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import ByteTypeDownloadButton from "../../components/ByteTypeDownloadButton"
 import { AppModalContext } from "../../contexts/appModalContext/appModalContext"
 import { selectAddress } from "../../redux/slices/authenticationSlice"
+
 import {
 	selectBuckets,
 	selectBucketsLoading,
@@ -18,11 +20,7 @@ import {
 	userGetAllSchemas,
 } from "../../redux/slices/schemasSlice"
 import { MODAL_CONTENT_NEW_OBJECT } from "../../utils/constants"
-import {
-	SearchableList,
-	SearchableListItem,
-	SonrObject,
-} from "../../utils/types"
+import { SearchableListItem, SonrObject } from "../../utils/types"
 import ObjectsPageComponent from "./Component"
 
 function ObjectsPageContainer() {
@@ -57,7 +55,6 @@ function ObjectsPageContainer() {
 			}
 		}
 		initialize()
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	useEffect(() => {
@@ -68,7 +65,6 @@ function ObjectsPageContainer() {
 				})
 			)
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedBucket])
 
 	useEffect(() => {
@@ -84,7 +80,6 @@ function ObjectsPageContainer() {
 				},
 			})
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedSchema, selectedBucket])
 
 	function openNewObjectModal() {
@@ -101,17 +96,36 @@ function ObjectsPageContainer() {
 		openModal()
 	}
 
-	function mapToListFormat(): SearchableList {
-		return objectsList
-			.filter((item: SonrObject) => item.schemaDid === selectedSchema)
-			.map(({ cid, data }: SonrObject): SearchableListItem => {
-				const listItem: SearchableListItem = {}
-				listItem.cid = { text: cid }
-				Object.keys(data).forEach((key) => {
-					listItem[key] = { text: data[key].toString() }
-				})
+	const getList = () => {
+		const schema = schemaMetadata.find(
+			(schema) => schema.did === selectedSchema
+		)!
+
+		const objectReducer =
+			(object: SonrObject) => (listItem: SearchableListItem, key: string) => {
+				const schemaField = schema.fields.find((field) => field.name === key)!
+				listItem[key] =
+					schemaField.type === 5
+						? {
+								text: "",
+								Component: ByteTypeDownloadButton,
+								props: {
+									cid: object.cid,
+									schemaDid: schema.did,
+									itemKey: key,
+								},
+						  }
+						: {
+								text: object.data[key],
+						  }
 				return listItem
-			})
+			}
+
+		return objectsList
+			.filter((item) => item.schemaDid === selectedSchema)
+			.map((object) =>
+				Object.keys(object.data).reduce(objectReducer(object), {})
+			)
 	}
 
 	return (
@@ -124,7 +138,7 @@ function ObjectsPageContainer() {
 			setSelectedSchema={setSelectedSchema}
 			openNewObjectModal={openNewObjectModal}
 			loading={loading}
-			list={mapToListFormat()}
+			list={getList()}
 			bucketCount={buckets.length}
 			schemaCount={schemaMetadata.length}
 		/>
