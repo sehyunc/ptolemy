@@ -5,7 +5,7 @@ import "@sonr-io/nebula-react/dist/esm/index.css"
 import "@fontsource/manrope/400.css"
 import "@fontsource/manrope/600.css"
 import "@fontsource/manrope/800.css"
-import AppOld from "./AppOld"
+import Main from "./Main"
 import reportWebVitals from "./reportWebVitals"
 import { store } from "./redux/store"
 import { Provider } from "react-redux"
@@ -23,7 +23,7 @@ root.render(
         <AppModalProvider>
           <ChakraProvider theme={theme}>
             <Router>
-              <AppOld />
+              <Main />
             </Router>
           </ChakraProvider>
         </AppModalProvider>

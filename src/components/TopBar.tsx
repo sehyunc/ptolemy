@@ -5,18 +5,23 @@ const TopBar = (userAddr: any) => {
   const navigate = useNavigate()
   // TODO: SHOW USER ADDRESS IN PROFILE
   // TODO: USE NORMALIZEDD DATA
-  var addr = localStorage.getItem("addr")
+  const addr = localStorage.getItem("addr")
+  const formattedAddr = addr ? `${addr.slice(0, 6)}...${addr.slice(-6)}` : ""
 
   return (
     <>
-      <Box bg="black" borderBottom="1px solid #1f1f23" px="64px" pt="16px">
+      <Box bg="black" borderBottom="1px solid #1f1f23" px="64px" py="16px">
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-          <Flex alignItems="center" onClick={() => navigate("/chains")}>
+          <Flex
+            alignItems="center"
+            cursor="pointer"
+            onClick={() => navigate("/chains")}
+          >
             <Heading>Lumos</Heading>
           </Flex>
           <Spacer />
           <Link to={"/profile"}>
-            <Button>{addr ? addr : "Profile"}</Button>
+            <Button>{formattedAddr ? formattedAddr : "Profile"}</Button>
           </Link>
         </Flex>
       </Box>

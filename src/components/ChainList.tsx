@@ -1,9 +1,12 @@
+//@ts-nocheck
 import { Box, Button, Center, Heading, Text } from "@chakra-ui/react"
 import { ArrowBackIcon } from "@chakra-ui/icons"
 import { useNavigate, useParams } from "react-router-dom"
 import data from "../mockData.json"
 import Header from "./Header"
 import Row from "./Row"
+import vData from "../mockData"
+console.log("🚀 ~ vData", vData)
 
 const ChainList = () => {
   const navigate = useNavigate()
@@ -11,6 +14,86 @@ const ChainList = () => {
   const validators = Object.entries(data).filter(
     ([, d]) => d.chainName === chainId
   )
+
+  var gov_votes = []
+  var block_proposed = []
+  var power = []
+  var delegators = []
+
+  const normalize = (value, min, max) => {
+    var normalized = parseFloat((value - min) / (max - min))
+    return normalized
+  }
+
+  const onChainCalc = (valName) => {
+    vData.sort()
+    Object.entries(vData).map(([key, value]) => {
+      if (valName === value.title) {
+        gov_votes.push(parseFloat(value.governance_votes))
+        block_proposed.push(parseFloat(value.blocks_proposed))
+        power.push(parseFloat(value.power))
+        delegators.push(parseFloat(value.delegators))
+      }
+    })
+
+    var normalized_gov_vote = 0
+    var normalized_block_proposed = 0
+    var normalized_power = 0
+    var normalized_delegators = 0
+    var validator_score = 0
+
+    // governance_votes (30%) + block_proposed (20%) + power (20%) + delegators (30%)
+
+    Object.entries(vData).map(([key, value]) => {
+      if (valName === value.title) {
+        normalized_gov_vote = normalize(
+          parseFloat(value.governance_votes),
+          Math.min(...gov_votes),
+          Math.max(...gov_votes)
+        )
+        normalized_block_proposed = normalize(
+          parseFloat(value.blocks_proposed),
+          Math.min(...block_proposed),
+          Math.max(...block_proposed)
+        )
+        normalized_power = normalize(
+          parseFloat(value.power),
+          Math.min(...power),
+          Math.max(...power)
+        )
+        normalized_delegators = normalize(
+          parseFloat(value.delegators),
+          Math.min(...delegators),
+          Math.max(...delegators)
+        )
+
+        validator_score =
+          normalized_gov_vote +
+          normalized_block_proposed +
+          normalized_power +
+          normalized_delegators
+      }
+    })
+
+    return validator_score
+  }
+
+  //@ts-ignore
+  const calculateScore = (valName, valData) => {
+    // off chain score
+    let offchain_score =
+      valData.credit + valData.discord * 0.1 + valData.reddit * 0.1
+    // on chain score
+    let onchain_score = onChainCalc(valName)
+    let final_score = offchain_score + onchain_score
+
+    if (!final_score) {
+      final_score = 0
+    }
+
+    return final_score.toFixed(2)
+  }
+
   return (
     <>
       <Center>
@@ -25,15 +108,24 @@ const ChainList = () => {
       </Center>
       <Box mx="auto" maxWidth="container.xl" p={12}>
         <Header />
-        {validators.map(([address, { chainName, credit, discord, reddit }]) => (
-          <Row
-            address={address}
-            chainName={chainName}
-            credit={credit}
-            discord={discord}
-            reddit={reddit}
-          />
-        ))}
+        {validators.map(([address, { chainName, credit, discord, reddit }]) => {
+          const score = calculateScore(address, {
+            chainName,
+            credit,
+            discord,
+            reddit,
+          })
+
+          return (
+            <Row
+              address={address}
+              chainName={chainName}
+              credit={score}
+              discord={discord}
+              reddit={reddit}
+            />
+          )
+        })}
         <Box
           display="flex"
           backgroundColor="#0e0e10"

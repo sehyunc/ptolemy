@@ -1,93 +1,105 @@
 {
-  "sdf7g8698sdfgsgsf89": {
-    "address": "sdf7g8698sdfgsgsf89",
+  "PlatON": {
     "chainName": "osmosis",
     "credit": 0,
-    "discord": 0,
-    "reddit": 0
+    "discord": 3,
+    "reddit": 1,
+    "twitter": 1
   },
-  "6987ds6fg98df7fsdggs": {
-    "chainName": "osmosis",
-    "credit": 1,
-    "discord": 2,
-    "reddit": 0
-  },
-  "asdfasdf9872308497": {
+  "Foundry USA": {
     "chainName": "osmosis",
     "credit": 1,
     "discord": 2,
-    "reddit": 0
+    "reddit": 0,
+    "twitter": 0
   },
-  "ghjk80gh7809gh0jkjg": {
+  "Coinbase Custody": {
+    "chainName": "osmosis",
+    "credit": 1,
+    "discord": 2,
+    "reddit": 0,
+    "twitter": 0
+  },
+  "windpowerstake": {
+    "chainName": "juno",
+    "credit": 0,
+    "discord": 0,
+    "reddit": 0,
+    "twitter": 0
+  },
+  "Knowable": {
     "chainName": "juno",
     "credit": 0,
     "discord": 0,
     "reddit": 0
   },
-  "ds9f786g987dsfgs98f": {
+  "topool": {
     "chainName": "juno",
     "credit": 0,
     "discord": 0,
-    "reddit": 0
+    "reddit": 0,
+    "twitter": 0
   },
-  "3bmn4v56m3vm3n563556": {
-    "chainName": "juno",
+  "01node": {
+    "chainName": "secretNetwork",
     "credit": 0,
     "discord": 0,
-    "reddit": 0
+    "reddit": 0,
+    "twitter": 0
   },
-  "7ds96fg789ds6fg978s": {
+  "Citadel.one": {
     "chainName": "secretNetwork",
     "credit": 0,
     "discord": 0,
     "reddit": 0
   },
-  "23knbjkl43b5kj4b5jk45": {
+  "CosmosLink": {
     "chainName": "secretNetwork",
     "credit": 0,
     "discord": 0,
-    "reddit": 0
+    "reddit": 0,
+    "twitter": 0
   },
-  "qwqe6r978qwe6r987qwere": {
-    "chainName": "secretNetwork",
-    "credit": 0,
-    "discord": 0,
-    "reddit": 0
-  },
-  "jl234kj5blk23j45bl45": {
+  "Umbrella ☔": {
     "chainName": "evmos",
     "credit": 0,
     "discord": 0,
-    "reddit": 0
+    "reddit": 0,
+    "twitter": 0
   },
-  "klj234bjkl5346b656b5k": {
+  "BitValidator": {
     "chainName": "evmos",
     "credit": 0,
     "discord": 0,
-    "reddit": 0
+    "reddit": 0,
+    "twitter": 0
   },
-  "jklbkjbkjsfdgsdf8g70": {
+  "StakeHouse": {
     "chainName": "evmos",
     "credit": 0,
     "discord": 0,
-    "reddit": 0
+    "reddit": 0,
+    "twitter": 0
   },
-  "dsfg78s0d7fg98s7d0f98": {
+  "hy-hydrogen": {
     "chainName": "kava",
     "credit": 0,
     "discord": 0,
-    "reddit": 0
+    "reddit": 0,
+    "twitter": 0
   },
-  "xcv908b7x0c98v7b0x98vbv": {
+  "oneUatom2": {
     "chainName": "kava",
     "credit": 0,
     "discord": 0,
-    "reddit": 0
+    "reddit": 0,
+    "twitter": 0
   },
-  "q7w098e7r0q98e7r098qe7er": {
+  "FreshATOMS.com": {
     "chainName": "kava",
     "credit": 0,
     "discord": 0,
-    "reddit": 0
+    "reddit": 0,
+    "twitter": 0
   }
 }

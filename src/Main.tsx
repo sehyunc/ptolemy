@@ -18,7 +18,7 @@ import ChainList from "./components/ChainList"
 import ValidatorDetails from "./components/ValidatorDetails"
 import TopBar from "./components/TopBar"
 
-const App = () => {
+const Main = () => {
   const { colorMode, setColorMode } = useColorMode()
 
   useEffect(() => {
@@ -228,4 +228,4 @@ const MainPage = () => {
   )
 }
 
-export default App
+export default Main

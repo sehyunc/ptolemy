@@ -18,7 +18,7 @@ const Header: React.FC = () => {
     >
       <HeaderItem flex={2} title="Name" />
       <HeaderItem title="Chain" />
-      <HeaderItem align="right" title="Credit" />
+      <HeaderItem align="right" title="Rep" />
       <HeaderItem align="right" title="Discord" />
       <HeaderItem align="right" title="Reddit" />
     </Box>

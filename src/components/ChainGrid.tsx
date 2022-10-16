@@ -8,7 +8,7 @@ const ChainGrid = () => {
     <div>
       <Grid templateColumns="repeat(3, 1fr)" gap={6}>
         {chains.map((c) => (
-          <Link to={`/list/${c}`}>
+          <Link to={`/list/${c === "secret network" ? "secretNetwork" : c}`}>
             <Box
               backgroundColor="#0e0e10"
               border="1px solid #1f1f23"
