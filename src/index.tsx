@@ -5,7 +5,7 @@ import "@sonr-io/nebula-react/dist/esm/index.css"
 import "@fontsource/manrope/400.css"
 import "@fontsource/manrope/600.css"
 import "@fontsource/manrope/800.css"
-import App from "./App"
+import AppOld from "./AppOld"
 import reportWebVitals from "./reportWebVitals"
 import { store } from "./redux/store"
 import { Provider } from "react-redux"
@@ -18,7 +18,7 @@ root.render(
 		<Provider store={store}>
 			<AppSettingsProvider>
 				<AppModalProvider>
-					<App />
+					<AppOld />
 				</AppModalProvider>
 			</AppSettingsProvider>
 		</Provider>

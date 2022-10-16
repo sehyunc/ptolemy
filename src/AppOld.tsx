@@ -1,0 +1,112 @@
+import React, { useState, useEffect } from "react"
+import createAccount from "./service/createAccount"
+import login from "./service/login"
+import getAccountInfo from "./service/getAccountInfo"
+import { userCreateAccount } from "./redux/slices/authenticationSlice"
+import axios from "axios"
+
+const App = () => {
+	return (
+		<div>
+			<LogicComp />
+			<br />
+			<hr />
+			<br />
+			<MainPage />
+		</div>
+	)
+}
+
+const LogicComp = () => {
+	const [userAddress, setAddress] = useState<string>("")
+	const [password, setPassword] = useState<string>("")
+
+	const createAcc = async () => {
+		// http://localhost:8080/api/v1/account/create
+
+		const pass = { password: password }
+		axios
+			.post("http://localhost:4040/api/v1/account/create", pass)
+			.then((response: any) => console.log(response))
+	}
+
+	const loginUser = async () => {
+		const loginInfo = { password: password, address: userAddress }
+		axios
+			.post("http://localhost:4040/api/v1/account/login", loginInfo)
+			.then((response: any) => console.log(response))
+	}
+
+	const handleTextInputChange = (e: any) => {
+		setPassword(e.target.value)
+	}
+
+	const handleTextInputChangeAddress = (e: any) => {
+		setAddress(e.target.value)
+	}
+
+	return (
+		<div>
+			<h1>Login Stuff</h1>
+			<h1>
+				Create Account (*Create account with password but login with userAddress
+				and Password)
+			</h1>
+			<label>
+				User Address:
+				<input
+					type="text"
+					value={userAddress}
+					name="address"
+					style={{ border: "1px solid red" }}
+					onChange={(e) => handleTextInputChangeAddress(e)}
+				/>
+			</label>
+			<label>
+				User Password:
+				<input
+					type="text"
+					value={password}
+					name="password"
+					style={{ border: "1px solid red" }}
+					onChange={(e) => handleTextInputChange(e)}
+				/>
+			</label>
+			&nbsp;
+			<input
+				type="submit"
+				value="Create Account"
+				style={{ background: "#eee" }}
+				onClick={() => createAcc()}
+			/>
+			&nbsp; &nbsp;
+			<input
+				type="submit"
+				value="Login User"
+				style={{ background: "#eee" }}
+				onClick={() => loginUser()}
+			/>
+		</div>
+	)
+}
+
+const MainPage = () => {
+	const [accInfo, setAccInfo] = useState("")
+
+	useEffect(() => {
+		axios
+			.get("http://localhost:4040/api/v1/account/info")
+			.then(function (response) {
+				setAccInfo(response.data?.Address)
+			})
+	}, [])
+
+	return (
+		<div>
+			<h1> Main Page Hello </h1>
+			<h1>User Address: {accInfo}</h1>
+		</div>
+	)
+}
+
+export default App

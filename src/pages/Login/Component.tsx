@@ -40,7 +40,7 @@ const Component = ({
 			sidebarContent={
 				<div className=" max-w-[479px] flex flex-col mt-40 ml-14">
 					<div className="text-custom-3xl font-extrabold tracking-custom-x2tighter mb-6">
-						Welcome to Sonr
+						Welcome to Sonr hello Sishir
 					</div>
 					<div className="text-custom-md font-normal tracking-custom-tight mb-10">
 						We're glad you're here.
