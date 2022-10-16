@@ -1,93 +1,93 @@
 {
-	"sdf7g8698sdfgsgsf89": {
-		"address": "sdf7g8698sdfgsgsf89",
-		"chainName": "osmosis",
-		"credit": 0,
-		"discord": 0,
-		"reddit": 0
-	},
-	"6987ds6fg98df7fsdggs": {
-		"chainName": "osmosis",
-		"credit": 1,
-		"discord": 2,
-		"reddit": 0
-	},
-	"asdfasdf9872308497": {
-		"chainName": "osmosis",
-		"credit": 1,
-		"discord": 2,
-		"reddit": 0
-	},
-	"ghjk80gh7809gh0jkjg": {
-		"chainName": "juno",
-		"credit": 0,
-		"discord": 0,
-		"reddit": 0
-	},
-	"ds9f786g987dsfgs98f": {
-		"chainName": "juno",
-		"credit": 0,
-		"discord": 0,
-		"reddit": 0
-	},
-	"3bmn4v56m3vm3n563556": {
-		"chainName": "juno",
-		"credit": 0,
-		"discord": 0,
-		"reddit": 0
-	},
-	"7ds96fg789ds6fg978s": {
-		"chainName": "secretNetwork",
-		"credit": 0,
-		"discord": 0,
-		"reddit": 0
-	},
-	"23knbjkl43b5kj4b5jk45": {
-		"chainName": "secretNetwork",
-		"credit": 0,
-		"discord": 0,
-		"reddit": 0
-	},
-	"qwqe6r978qwe6r987qwere": {
-		"chainName": "secretNetwork",
-		"credit": 0,
-		"discord": 0,
-		"reddit": 0
-	},
-	"jl234kj5blk23j45bl45": {
-		"chainName": "evmos",
-		"credit": 0,
-		"discord": 0,
-		"reddit": 0
-	},
-	"klj234bjkl5346b656b5k": {
-		"chainName": "evmos",
-		"credit": 0,
-		"discord": 0,
-		"reddit": 0
-	},
-	"jklbkjbkjsfdgsdf8g70": {
-		"chainName": "evmos",
-		"credit": 0,
-		"discord": 0,
-		"reddit": 0
-	},
-	"dsfg78s0d7fg98s7d0f98": {
-		"chainName": "kava",
-		"credit": 0,
-		"discord": 0,
-		"reddit": 0
-	},
-	"xcv908b7x0c98v7b0x98vbv": {
-		"chainName": "kava",
-		"credit": 0,
-		"discord": 0,
-		"reddit": 0
-	},
-	"q7w098e7r0q98e7r098qe7er": {
-		"chainName": "kava",
-		"credit": 0,
-		"discord": 0,
-		"reddit": 0
-	}
+  "sdf7g8698sdfgsgsf89": {
+    "address": "sdf7g8698sdfgsgsf89",
+    "chainName": "osmosis",
+    "credit": 0,
+    "discord": 0,
+    "reddit": 0
+  },
+  "6987ds6fg98df7fsdggs": {
+    "chainName": "osmosis",
+    "credit": 1,
+    "discord": 2,
+    "reddit": 0
+  },
+  "asdfasdf9872308497": {
+    "chainName": "osmosis",
+    "credit": 1,
+    "discord": 2,
+    "reddit": 0
+  },
+  "ghjk80gh7809gh0jkjg": {
+    "chainName": "juno",
+    "credit": 0,
+    "discord": 0,
+    "reddit": 0
+  },
+  "ds9f786g987dsfgs98f": {
+    "chainName": "juno",
+    "credit": 0,
+    "discord": 0,
+    "reddit": 0
+  },
+  "3bmn4v56m3vm3n563556": {
+    "chainName": "juno",
+    "credit": 0,
+    "discord": 0,
+    "reddit": 0
+  },
+  "7ds96fg789ds6fg978s": {
+    "chainName": "secretNetwork",
+    "credit": 0,
+    "discord": 0,
+    "reddit": 0
+  },
+  "23knbjkl43b5kj4b5jk45": {
+    "chainName": "secretNetwork",
+    "credit": 0,
+    "discord": 0,
+    "reddit": 0
+  },
+  "qwqe6r978qwe6r987qwere": {
+    "chainName": "secretNetwork",
+    "credit": 0,
+    "discord": 0,
+    "reddit": 0
+  },
+  "jl234kj5blk23j45bl45": {
+    "chainName": "evmos",
+    "credit": 0,
+    "discord": 0,
+    "reddit": 0
+  },
+  "klj234bjkl5346b656b5k": {
+    "chainName": "evmos",
+    "credit": 0,
+    "discord": 0,
+    "reddit": 0
+  },
+  "jklbkjbkjsfdgsdf8g70": {
+    "chainName": "evmos",
+    "credit": 0,
+    "discord": 0,
+    "reddit": 0
+  },
+  "dsfg78s0d7fg98s7d0f98": {
+    "chainName": "kava",
+    "credit": 0,
+    "discord": 0,
+    "reddit": 0
+  },
+  "xcv908b7x0c98v7b0x98vbv": {
+    "chainName": "kava",
+    "credit": 0,
+    "discord": 0,
+    "reddit": 0
+  },
+  "q7w098e7r0q98e7r098qe7er": {
+    "chainName": "kava",
+    "credit": 0,
+    "discord": 0,
+    "reddit": 0
+  }
 }

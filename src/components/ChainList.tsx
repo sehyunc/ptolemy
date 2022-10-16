@@ -6,58 +6,58 @@ import Header from "./Header"
 import Row from "./Row"
 
 const ChainList = () => {
-	const navigate = useNavigate()
-	const { chainId } = useParams()
-	const validators = Object.entries(data).filter(
-		([, d]) => d.chainName === chainId
-	)
-	return (
-		<>
-			<Center>
-				<Heading
-					bgGradient="linear(to-l, #7928CA, #FF0080)"
-					bgClip="text"
-					fontSize="6xl"
-					textTransform="capitalize"
-				>
-					{chainId}
-				</Heading>
-			</Center>
-			<Box mx="auto" maxWidth="container.xl" p={12}>
-				<Header />
-				{validators.map(([address, { chainName, credit, discord, reddit }]) => (
-					<Row
-						address={address}
-						chainName={chainName}
-						credit={credit}
-						discord={discord}
-						reddit={reddit}
-					/>
-				))}
-				<Box
-					display="flex"
-					backgroundColor="#0e0e10"
-					borderRight="1px solid #1f1f23"
-					borderLeft="1px solid #1f1f23"
-					borderBottom="1px solid #1f1f23"
-					borderBottomEndRadius="10px"
-					borderBottomStartRadius="10px"
-					flexDirection="row-reverse"
-					padding="6"
-				>
-					<Text opacity="0.65">Page 1 of 1</Text>
-				</Box>
-			</Box>
-			<Center>
-				<Button
-					leftIcon={<ArrowBackIcon />}
-					onClick={() => navigate("/chains")}
-				>
-					Back
-				</Button>
-			</Center>
-		</>
-	)
+  const navigate = useNavigate()
+  const { chainId } = useParams()
+  const validators = Object.entries(data).filter(
+    ([, d]) => d.chainName === chainId
+  )
+  return (
+    <>
+      <Center>
+        <Heading
+          bgGradient="linear(to-l, #7928CA, #FF0080)"
+          bgClip="text"
+          fontSize="6xl"
+          textTransform="capitalize"
+        >
+          {chainId}
+        </Heading>
+      </Center>
+      <Box mx="auto" maxWidth="container.xl" p={12}>
+        <Header />
+        {validators.map(([address, { chainName, credit, discord, reddit }]) => (
+          <Row
+            address={address}
+            chainName={chainName}
+            credit={credit}
+            discord={discord}
+            reddit={reddit}
+          />
+        ))}
+        <Box
+          display="flex"
+          backgroundColor="#0e0e10"
+          borderRight="1px solid #1f1f23"
+          borderLeft="1px solid #1f1f23"
+          borderBottom="1px solid #1f1f23"
+          borderBottomEndRadius="10px"
+          borderBottomStartRadius="10px"
+          flexDirection="row-reverse"
+          padding="6"
+        >
+          <Text opacity="0.65">Page 1 of 1</Text>
+        </Box>
+      </Box>
+      <Center>
+        <Button
+          leftIcon={<ArrowBackIcon />}
+          onClick={() => navigate("/chains")}
+        >
+          Back
+        </Button>
+      </Center>
+    </>
+  )
 }
 
 export default ChainList

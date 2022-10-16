@@ -1,11 +1,11 @@
 import AuthenticationLoadingComponent from "./Component"
 
 interface AuthenticationLoadingProps {
-	route: string
+  route: string
 }
 
 function AuthenticationLoadingContainer({ route }: AuthenticationLoadingProps) {
-	return <AuthenticationLoadingComponent route={route} />
+  return <AuthenticationLoadingComponent route={route} />
 }
 
 export default AuthenticationLoadingContainer

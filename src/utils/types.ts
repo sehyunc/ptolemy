@@ -1,94 +1,94 @@
 import { FC } from "react"
 
 export enum ListTypes {
-	schema,
-	object,
+  schema,
+  object,
 }
 
 export interface IchangedProperty {
-	name?: string
-	type?: string
+  name?: string
+  type?: string
 }
 
 export interface handlePropertyChangeProps {
-	index: number
-	data: IchangedProperty
+  index: number
+  data: IchangedProperty
 }
 
 export interface Iproperty {
-	name: string
-	type: string
+  name: string
+  type: string
 }
 
 export interface InewSchema {
-	address: string
-	label: string
-	fields: Record<string, number>
+  address: string
+  label: string
+  fields: Record<string, number>
 }
 
 export interface InewObject {
-	schemaDid: string
-	label: string
-	object: Record<string, any>
+  schemaDid: string
+  label: string
+  object: Record<string, any>
 }
 
 export type SchemaMeta = {
-	did: string
-	label: string
-	fields: SchemaField[]
+  did: string
+  label: string
+  fields: SchemaField[]
 }
 
 export type SchemaField = {
-	name: string
-	type: number
+  name: string
+  type: number
 }
 
 export type Bucket = {
-	did: string
-	label: string
-	creator: string
-	timestamp: string
-	content: BucketContent[]
+  did: string
+  label: string
+  creator: string
+  timestamp: string
+  content: BucketContent[]
 }
 
 export type BucketContent = {
-	uri: string
+  uri: string
 }
 
 export type SonrObject = {
-	cid: string
-	schemaDid: string
-	data: ObjectData
+  cid: string
+  schemaDid: string
+  data: ObjectData
 }
 
 export type ObjectData = { [key: string]: any }
 
 export type SearchableListItemData = {
-	text?: string
-	Component?: FC<any>
-	props?: Record<string, any>
-	shrinkColumn?: boolean
+  text?: string
+  Component?: FC<any>
+  props?: Record<string, any>
+  shrinkColumn?: boolean
 }
 
 export type SearchableListItem = {
-	[key: string]: SearchableListItemData
+  [key: string]: SearchableListItemData
 }
 
 export type SearchableListType = SearchableListItem[]
 
 export interface updateBucketProps {
-	bucketDid: string
-	objectCid: string
-	schemaDid: string
+  bucketDid: string
+  objectCid: string
+  schemaDid: string
 }
 
 export interface onInputFileProps {
-	file: File
-	onChange: (value: Record<string, any>) => void
+  file: File
+  onChange: (value: Record<string, any>) => void
 }
 
 export interface objectsSelectionCheckbox {
-	schemaDid: string
-	cid: string
-	checked: boolean
+  schemaDid: string
+  cid: string
+  checked: boolean
 }

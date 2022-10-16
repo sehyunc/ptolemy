@@ -4,58 +4,58 @@ import { NavigateFunction } from "react-router-dom"
 import { AppSettingsContext } from "../../../contexts/appSettingsContext/appSettingsContext"
 
 interface Ibutton {
-	label?: string
-	icon: string
-	route: string
+  label?: string
+  icon: string
+  route: string
 }
 
 interface ButtonGroupProps {
-	title: string
-	buttons: Array<Ibutton>
-	navigate: NavigateFunction
-	currentPath: string
-	className?: string
+  title: string
+  buttons: Array<Ibutton>
+  navigate: NavigateFunction
+  currentPath: string
+  className?: string
 }
 
 function ButtonGroup({
-	title,
-	buttons,
-	navigate,
-	currentPath,
-	className,
+  title,
+  buttons,
+  navigate,
+  currentPath,
+  className,
 }: ButtonGroupProps) {
-	const { menuIsCollapsed } = useContext(AppSettingsContext)
+  const { menuIsCollapsed } = useContext(AppSettingsContext)
 
-	return (
-		<div className={className}>
-			<div className="mb-6">
-				<span
-					className={`
+  return (
+    <div className={className}>
+      <div className="mb-6">
+        <span
+          className={`
 						${menuIsCollapsed ? "text-center" : ""}
 						block text-custom-2xs uppercase font-semibold text-subdued
 					`}
-				>
-					{title}
-				</span>
-			</div>
-			{buttons.map(({ label, icon, route }, index) => {
-				return (
-					<Button
-						key={`${label}-${index}`}
-						styling={`
+        >
+          {title}
+        </span>
+      </div>
+      {buttons.map(({ label, icon, route }, index) => {
+        return (
+          <Button
+            key={`${label}-${index}`}
+            styling={`
 							${menuIsCollapsed ? "justify-center" : ""}
 							w-full font-extrabold
 						`}
-						skin={route === currentPath ? "primary" : ""}
-						label={!menuIsCollapsed ? label : ""}
-						iconName={icon}
-						iconType={route === currentPath ? "duotone" : "outline"}
-						onClick={() => navigate(route)}
-					/>
-				)
-			})}
-		</div>
-	)
+            skin={route === currentPath ? "primary" : ""}
+            label={!menuIsCollapsed ? label : ""}
+            iconName={icon}
+            iconType={route === currentPath ? "duotone" : "outline"}
+            onClick={() => navigate(route)}
+          />
+        )
+      })}
+    </div>
+  )
 }
 
 export default ButtonGroup

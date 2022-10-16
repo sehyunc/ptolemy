@@ -1,23 +1,23 @@
 const APP_STATE = "SonrSpeedwayState"
 
 export function localStoreSaveJson(key: string, json: Record<string, any>) {
-	window.localStorage.setItem(key, JSON.stringify(json))
+  window.localStorage.setItem(key, JSON.stringify(json))
 }
 
 export function localStoreGetJson(key: string) {
-	try {
-		const json = window.localStorage.getItem(key) as string
-		return JSON.parse(json)
-	} catch (err) {
-		console.log("Error parsing JSON at localStoreGetJson function.", err)
-		return {}
-	}
+  try {
+    const json = window.localStorage.getItem(key) as string
+    return JSON.parse(json)
+  } catch (err) {
+    console.log("Error parsing JSON at localStoreGetJson function.", err)
+    return {}
+  }
 }
 
 export function syncAppStateToLocalCache(state: any) {
-	localStoreSaveJson(APP_STATE, state)
+  localStoreSaveJson(APP_STATE, state)
 }
 
 export function getAppStateFromLocalCache(): any {
-	return localStoreGetJson(APP_STATE)
+  return localStoreGetJson(APP_STATE)
 }

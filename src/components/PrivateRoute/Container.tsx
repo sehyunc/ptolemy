@@ -4,15 +4,15 @@ import { selectIsLogged } from "../../redux/slices/authenticationSlice"
 import { ROUTE_LOGIN } from "../../utils/constants"
 
 interface PrivateRouteProps {
-	Component: React.FC
+  Component: React.FC
 }
 
 function PrivateRoute({ Component, ...props }: PrivateRouteProps) {
-	const isLogged = useSelector(selectIsLogged)
+  const isLogged = useSelector(selectIsLogged)
 
-	return (
-		<>{isLogged ? <Component {...props} /> : <Navigate to={ROUTE_LOGIN} />}</>
-	)
+  return (
+    <>{isLogged ? <Component {...props} /> : <Navigate to={ROUTE_LOGIN} />}</>
+  )
 }
 
 export default PrivateRoute

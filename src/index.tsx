@@ -17,19 +17,19 @@ import theme from "./theme"
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
-	<React.StrictMode>
-		<Provider store={store}>
-			<AppSettingsProvider>
-				<AppModalProvider>
-					<ChakraProvider theme={theme}>
-						<Router>
-							<AppOld />
-						</Router>
-					</ChakraProvider>
-				</AppModalProvider>
-			</AppSettingsProvider>
-		</Provider>
-	</React.StrictMode>
+  <React.StrictMode>
+    <Provider store={store}>
+      <AppSettingsProvider>
+        <AppModalProvider>
+          <ChakraProvider theme={theme}>
+            <Router>
+              <AppOld />
+            </Router>
+          </ChakraProvider>
+        </AppModalProvider>
+      </AppSettingsProvider>
+    </Provider>
+  </React.StrictMode>
 )
 
 // If you want to start measuring performance in your app, pass a function

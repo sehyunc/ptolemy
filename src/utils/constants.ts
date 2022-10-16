@@ -22,7 +22,7 @@ export const ROOT_INITIALIZE_FROM_CACHE = "root/initializeFromCache"
 export const ROOT_RESET = "root/reset"
 
 export const BASE_API = `${
-	process.env.REACT_APP_DEV_MODE === "true"
-		? `http://localhost:${process.env.REACT_APP_SERVER_PORT || 3001}`
-		: ""
+  process.env.REACT_APP_DEV_MODE === "true"
+    ? `http://localhost:${process.env.REACT_APP_SERVER_PORT || 3001}`
+    : ""
 }`

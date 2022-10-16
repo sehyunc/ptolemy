@@ -1,133 +1,197 @@
 import axios from "axios"
-import { useColorMode } from "@chakra-ui/react"
+import {
+  useColorMode,
+  Flex,
+  Text,
+  TabList,
+  Tabs,
+  Tab,
+  TabPanel,
+  Input,
+  Button,
+  TabPanels,
+} from "@chakra-ui/react"
 import { useEffect, useState } from "react"
-import { Routes, Route, Link, Outlet } from "react-router-dom"
+import { Routes, Route, Outlet } from "react-router-dom"
 import ChainGrid from "./components/ChainGrid"
 import ChainList from "./components/ChainList"
 import ValidatorDetails from "./components/ValidatorDetails"
 import TopBar from "./components/TopBar"
 
 const App = () => {
-	const { colorMode, setColorMode } = useColorMode()
+  const { colorMode, setColorMode } = useColorMode()
 
-	useEffect(() => {
-		if (colorMode === "light") setColorMode("dark")
-	}, [colorMode, setColorMode])
+  useEffect(() => {
+    if (colorMode === "light") setColorMode("dark")
+  }, [colorMode, setColorMode])
 
-	return (
-		<Routes>
-			<Route path="/" element={<TopBar />}>
-				<Route
-					index
-					element={
-						<>
-							<Login />
-							<MainPage />
-						</>
-					}
-				/>
-				<Route path="chains" element={<ChainGrid />} />
-				<Route path="list" element={<Outlet />}>
-					<Route path=":chainId" element={<ChainList />} />
-				</Route>
-				<Route path="validator" element={<Outlet />}>
-					<Route path=":validatorId" element={<ValidatorDetails />} />
-				</Route>
-			</Route>
-		</Routes>
-	)
+  return (
+    <Routes>
+      <Route path="/" element={<TopBar />}>
+        <Route
+          index
+          element={
+            <>
+              <Login />
+              <MainPage />
+            </>
+          }
+        />
+
+        <Route path="profile" element={<Profile />} />
+        <Route path="chains" element={<ChainGrid />} />
+        <Route path="list" element={<Outlet />}>
+          <Route path=":chainId" element={<ChainList />} />
+        </Route>
+        <Route path="validator" element={<Outlet />}>
+          <Route path=":validatorId" element={<ValidatorDetails />} />
+        </Route>
+      </Route>
+    </Routes>
+  )
 }
 
+const Profile = () => {
+  return (
+    <Flex>
+      <Login />
+    </Flex>
+  )
+}
 const Login = () => {
-	const [userAddress, setAddress] = useState<string>("")
-	const [password, setPassword] = useState<string>("")
+  const [userAddress, setAddress] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+  const [createAccLoading, setCreateAccLoading] = useState(false)
+  const [loginLoading, setLoginLoading] = useState(false)
 
-	const createAcc = async () => {
-		// http://localhost:8080/api/v1/account/create
+  const createAcc = async () => {
+    // http://localhost:8080/api/v1/account/create
+    setCreateAccLoading(true)
+    const pass = { password: password }
+    axios
+      .post("http://localhost:4040/api/v1/account/create", pass)
+      .then((response: any) => {
+        console.log(response)
+        setCreateAccLoading(false)
+      })
+  }
 
-		const pass = { password: password }
-		axios
-			.post("http://localhost:4040/api/v1/account/create", pass)
-			.then((response: any) => console.log(response))
-	}
+  const loginUser = async () => {
+    setLoginLoading(true)
+    const loginInfo = { password: password, address: userAddress }
+    axios
+      .post("http://localhost:4040/api/v1/account/login", loginInfo)
+      .then((response: any) => {
+        console.log(response)
+        setLoginLoading(false)
+      })
+  }
 
-	const loginUser = async () => {
-		const loginInfo = { password: password, address: userAddress }
-		axios
-			.post("http://localhost:4040/api/v1/account/login", loginInfo)
-			.then((response: any) => console.log(response))
-	}
+  const handleTextInputChange = (e: any) => {
+    setPassword(e.target.value)
+  }
 
-	const handleTextInputChange = (e: any) => {
-		setPassword(e.target.value)
-	}
+  const handleTextInputChangeAddress = (e: any) => {
+    setAddress(e.target.value)
+  }
 
-	const handleTextInputChangeAddress = (e: any) => {
-		setAddress(e.target.value)
-	}
+  return (
+    <Flex flexDir="column" width="100%" height="100vh" alignItems={"center"}>
+      <Flex
+        flexDir={"row"}
+        width="60vh"
+        alignSelf={"center"}
+        background={"#111"}
+        padding="20px"
+      >
+        <Tabs isFitted isLazy style={{ width: "100%" }}>
+          <TabList>
+            <Tab fontSize={"lg"}>Create Account</Tab>
+            <Tab fontSize={"lg"}>SignIn</Tab>
+          </TabList>
+          <TabPanels alignItems={"center"}>
+            {/* initially mounted */}
 
-	return (
-		<div>
-			<h1>Login Stuff</h1>
-			<h1>
-				Create Account (*Create account with password but login with userAddress
-				and Password)
-			</h1>
-			<label>
-				User Address:
-				<input
-					type="text"
-					value={userAddress}
-					name="address"
-					style={{ border: "1px solid red" }}
-					onChange={(e) => handleTextInputChangeAddress(e)}
-				/>
-			</label>
-			<label>
-				User Password:
-				<input
-					type="text"
-					value={password}
-					name="password"
-					style={{ border: "1px solid red" }}
-					onChange={(e) => handleTextInputChange(e)}
-				/>
-			</label>
-			&nbsp;
-			<input
-				type="submit"
-				value="Create Account"
-				style={{ background: "#eee" }}
-				onClick={() => createAcc()}
-			/>
-			&nbsp; &nbsp;
-			<input
-				type="submit"
-				value="Login User"
-				style={{ background: "#eee" }}
-				onClick={() => loginUser()}
-			/>
-		</div>
-	)
+            <TabPanel>
+              <Text fontSize={"sm"}>Password:</Text>
+              <Input
+                variant="flushed"
+                value={password}
+                onChange={handleTextInputChange}
+                placeholder="Type your password"
+                size="lg"
+                width={"100%"}
+              />
+              <br /> <br />
+              <Button
+                bgGradient="linear(to-l, #7928CA, #FF0080)"
+                width={"100%"}
+                marginLeft="auto"
+                marginRight="auto"
+                isLoading={createAccLoading}
+                onClick={() => createAcc()}
+              >
+                Create Account
+              </Button>
+            </TabPanel>
+            {/* initially not mounted */}
+            <TabPanel alignItems={"center"}>
+              <br />
+              <Text fontSize={"sm"}>User Address:</Text>
+              <Input
+                variant="flushed"
+                value={userAddress}
+                onChange={handleTextInputChangeAddress}
+                placeholder="Type your address"
+                size="lg"
+                width={"100%"}
+              />
+              <br /> <br />
+              <Text fontSize={"sm"}>Password:</Text>
+              <Input
+                variant="flushed"
+                value={password}
+                onChange={handleTextInputChange}
+                placeholder="Type your password"
+                size="lg"
+                width={"100%"}
+              />
+              <br /> <br />
+              <Button
+                bgGradient="linear(to-l, #7928CA, #FF0080)"
+                width={"100%"}
+                marginLeft="auto"
+                marginRight="auto"
+                isLoading={loginLoading}
+                onClick={() => loginUser()}
+              >
+                Sign In
+              </Button>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </Flex>
+    </Flex>
+  )
 }
 
 const MainPage = () => {
-	const [accInfo, setAccInfo] = useState("")
+  const [accInfo, setAccInfo] = useState("")
 
-	useEffect(() => {
-		axios
-			.get("http://localhost:4040/api/v1/account/info")
-			.then(function (response) {
-				setAccInfo(response.data?.Address)
-			})
-	}, [])
+  useEffect(() => {
+    axios
+      .get("http://localhost:4040/api/v1/account/info")
+      .then(function (response) {
+        setAccInfo(response.data?.Address)
+      })
+  }, [])
 
-	return (
-		<div>
-			<h1> Main Page Hello </h1>
-			<h1>User Address: {accInfo}</h1>
-		</div>
-	)
+  return (
+    <div>
+      <h1> Main Page Hello </h1>
+      <h1>User Address: {accInfo}</h1>
+    </div>
+  )
 }
 
 export default App
