@@ -24,7 +24,7 @@ const ChainDetails = () => {
       <Center mb={3}>
         <Box backgroundColor="#171717" borderRadius={10} py={8} px={12}>
           <Text
-            bgGradient="linear(to-l, #7928CA, #FF0080)"
+            bgGradient={`linear(to-r, #39b48e, #fafa6e)`}
             bgClip="text"
             fontSize="6xl"
             textTransform="capitalize"

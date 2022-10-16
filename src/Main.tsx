@@ -17,6 +17,7 @@ import ChainGrid from "./components/ChainGrid"
 import ChainList from "./components/ChainList"
 import ValidatorDetails from "./components/ValidatorDetails"
 import TopBar from "./components/TopBar"
+import LandingPage from "./LandingPage"
 
 const Main = () => {
   const { colorMode, setColorMode } = useColorMode()
@@ -28,15 +29,7 @@ const Main = () => {
   return (
     <Routes>
       <Route path="/" element={<TopBar />}>
-        <Route
-          index
-          element={
-            <>
-              <Login />
-              <MainPage />
-            </>
-          }
-        />
+        <Route index element={<LandingPage />} />
 
         <Route path="profile" element={<Login />} />
         <Route path="chains" element={<ChainGrid />} />
@@ -132,6 +125,7 @@ const Login = () => {
   return (
     <Flex flexDir="column" width="100%" height="100vh" alignItems={"center"}>
       <Flex
+        borderRadius={10}
         flexDir={"row"}
         width="60vh"
         alignSelf={"center"}
@@ -158,7 +152,7 @@ const Login = () => {
               />
               <br /> <br />
               <Button
-                bgGradient="linear(to-l, #7928CA, #FF0080)"
+                bgGradient={`linear(to-r, #39b48e, #fafa6e)`}
                 width={"100%"}
                 marginLeft="auto"
                 marginRight="auto"
@@ -192,7 +186,7 @@ const Login = () => {
               />
               <br /> <br />
               <Button
-                bgGradient="linear(to-l, #7928CA, #FF0080)"
+                bgGradient={`linear(to-r, #39b48e, #fafa6e)`}
                 width={"100%"}
                 marginLeft="auto"
                 marginRight="auto"

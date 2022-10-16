@@ -15,9 +15,9 @@ const TopBar = (userAddr: any) => {
           <Flex
             alignItems="center"
             cursor="pointer"
-            onClick={() => navigate("/chains")}
+            onClick={() => navigate("/")}
           >
-            <Heading>Lumos</Heading>
+            <Heading>Ptolemy</Heading>
           </Flex>
           <Spacer />
           <Link to={"/profile"}>

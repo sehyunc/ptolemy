@@ -100,7 +100,7 @@ const ChainList = () => {
     <>
       <Center>
         <Heading
-          bgGradient="linear(to-l, #7928CA, #FF0080)"
+          bgGradient={`linear(to-r, #39b48e, #fafa6e)`}
           bgClip="text"
           fontSize="6xl"
           textTransform="capitalize"
