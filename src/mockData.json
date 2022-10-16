@@ -4,28 +4,32 @@
     "credit": 0,
     "discord": 3,
     "reddit": 1,
-    "twitter": 1
+    "twitter": 1,
+    "did": "snr1g2amkv58rxmh3ezccpuqpsseeu2zh8g56xabgr"
   },
   "Foundry USA": {
     "chainName": "osmosis",
     "credit": 1,
     "discord": 2,
     "reddit": 0,
-    "twitter": 0
+    "twitter": 0,
+    "did": "snr1g2amkv58rxmh3ezccpuqpsseeu2zh8g56xangf"
   },
   "Coinbase Custody": {
     "chainName": "osmosis",
     "credit": 1,
     "discord": 2,
     "reddit": 0,
-    "twitter": 0
+    "twitter": 0,
+    "did": "snr1g2amkv58rxmh3ezccpuqpsseeu2zh8g56xabbs"
   },
   "windpowerstake": {
     "chainName": "juno",
     "credit": 0,
     "discord": 0,
     "reddit": 0,
-    "twitter": 0
+    "twitter": 0,
+    "did": "snr1g2amkv58rxmh3ezccpuqpsseeu2zh8g56xaby3"
   },
   "Knowable": {
     "chainName": "juno",
@@ -38,7 +42,8 @@
     "credit": 0,
     "discord": 0,
     "reddit": 0,
-    "twitter": 0
+    "twitter": 0,
+    "did": "snr1g2amkv58rxmh3ezccpuqpsseeu2zh8g56xabgr"
   },
   "01node": {
     "chainName": "secretNetwork",
@@ -51,7 +56,8 @@
     "chainName": "secretNetwork",
     "credit": 0,
     "discord": 0,
-    "reddit": 0
+    "reddit": 0,
+    "did": "snr1g2amkv58rxmh3ezccpuqpsseeu2zh8g56xab224"
   },
   "CosmosLink": {
     "chainName": "secretNetwork",
@@ -65,7 +71,8 @@
     "credit": 0,
     "discord": 0,
     "reddit": 0,
-    "twitter": 0
+    "twitter": 0,
+    "did": "snr1g2amkv58rxmh3ezccpuqpsseeu2zh8g56xavr2"
   },
   "BitValidator": {
     "chainName": "evmos",
@@ -79,27 +86,31 @@
     "credit": 0,
     "discord": 0,
     "reddit": 0,
-    "twitter": 0
+    "twitter": 0,
+    "did": "snr1g2amkv58rxmh3ezcvdqqpsseeu2zh8g56xa94w"
   },
   "hy-hydrogen": {
     "chainName": "kava",
     "credit": 0,
     "discord": 0,
     "reddit": 0,
-    "twitter": 0
+    "twitter": 0,
+    "did": "snr1g2amkv58rxmh3ezccvedesseeu2zh8g56xa94w"
   },
   "oneUatom2": {
     "chainName": "kava",
     "credit": 0,
     "discord": 0,
     "reddit": 0,
-    "twitter": 0
+    "twitter": 0,
+    "did": "snr1g2amkv58rxmh3ezccp13frseeu2zh8g56xa94w"
   },
   "FreshATOMS.com": {
     "chainName": "kava",
     "credit": 0,
     "discord": 0,
     "reddit": 0,
-    "twitter": 0
+    "twitter": 0,
+    "did": "snr1g2amkv58rxmh3ezcadvqpsseeu2zh8g56xa94w"
   }
 }

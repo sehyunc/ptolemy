@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 
 interface RowProps {
   address: string
+  did: string
   discord: number
   chainName: string
   credit: number
@@ -11,11 +12,13 @@ interface RowProps {
 
 const Row: React.FC<RowProps> = ({
   address,
+  did,
   discord,
   chainName,
   credit,
   reddit,
 }) => {
+  const formattedAddr = did ? `${did.slice(0, 6)}...${did.slice(-6)}` : ""
   return (
     <Link to={`/validator/${address}`}>
       <Box
@@ -37,6 +40,9 @@ const Row: React.FC<RowProps> = ({
         </Box>
         <Box alignItems="center" display="flex" flex={1} justifyContent="left">
           <Text>{chainName}</Text>
+        </Box>
+        <Box alignItems="center" display="flex" flex={1} justifyContent="left">
+          <Text>{formattedAddr}</Text>
         </Box>
         <Box alignItems="center" display="flex" flex={1} justifyContent="right">
           <Text>{credit}</Text>

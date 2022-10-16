@@ -81,17 +81,19 @@ const ChainList = () => {
   //@ts-ignore
   const calculateScore = (valName, valData) => {
     // off chain score
-    let offchain_score =
-      valData.credit + valData.discord * 0.1 + valData.reddit * 0.1
+    let offchain_score = valData.credit + valData.discord + valData.reddit
     // on chain score
     let onchain_score = onChainCalc(valName)
     let final_score = offchain_score + onchain_score
+
+    console.log(onchain_score)
 
     if (!final_score) {
       final_score = 0
     }
 
-    return final_score.toFixed(2)
+    var randVal = (Math.random() * (0 - 1) + 1).toFixed(2) + offchain_score
+    return randVal
   }
 
   return (
@@ -108,24 +110,27 @@ const ChainList = () => {
       </Center>
       <Box mx="auto" maxWidth="container.xl" p={12}>
         <Header />
-        {validators.map(([address, { chainName, credit, discord, reddit }]) => {
-          const score = calculateScore(address, {
-            chainName,
-            credit,
-            discord,
-            reddit,
-          })
+        {validators.map(
+          ([address, { chainName, credit, discord, reddit, did }]) => {
+            const score = calculateScore(address, {
+              chainName,
+              credit,
+              discord,
+              reddit,
+            })
 
-          return (
-            <Row
-              address={address}
-              chainName={chainName}
-              credit={score}
-              discord={discord}
-              reddit={reddit}
-            />
-          )
-        })}
+            return (
+              <Row
+                address={address}
+                chainName={chainName}
+                discord={discord}
+                reddit={reddit}
+                credit={score}
+                did={did}
+              />
+            )
+          }
+        )}
         <Box
           display="flex"
           backgroundColor="#0e0e10"
