@@ -92,8 +92,7 @@ const ChainList = () => {
       final_score = 0
     }
 
-    var randVal = (Math.random() * (0 - 1) + 1).toFixed(2) + offchain_score
-    return randVal
+    return final_score.toFixed(2)
   }
 
   return (
