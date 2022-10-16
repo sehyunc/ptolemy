@@ -12,13 +12,8 @@ import { Provider } from "react-redux"
 import { AppModalProvider } from "./contexts/appModalContext/appModalContext"
 import { AppSettingsProvider } from "./contexts/appSettingsContext/appSettingsContext"
 import { ChakraProvider } from "@chakra-ui/react"
-import {
-	BrowserRouter as Router,
-	Routes,
-	Route,
-	Link,
-	Outlet,
-} from "react-router-dom"
+import { BrowserRouter as Router } from "react-router-dom"
+import theme from "./theme"
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
@@ -26,7 +21,7 @@ root.render(
 		<Provider store={store}>
 			<AppSettingsProvider>
 				<AppModalProvider>
-					<ChakraProvider>
+					<ChakraProvider theme={theme}>
 						<Router>
 							<AppOld />
 						</Router>

@@ -2,6 +2,8 @@ import axios from "axios"
 import { useColorMode } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import { Routes, Route, Link, Outlet } from "react-router-dom"
+import ChainGrid from "./components/ChainGrid"
+import ChainList from "./components/ChainList"
 
 const App = () => {
 	const { colorMode, setColorMode } = useColorMode()
@@ -12,7 +14,14 @@ const App = () => {
 
 	return (
 		<Routes>
-			<Route path="/" element={<Outlet />}>
+			<Route
+				path="/"
+				element={
+					<div style={{ padding: "64px" }}>
+						<Outlet />
+					</div>
+				}
+			>
 				<Route
 					index
 					element={
@@ -22,6 +31,10 @@ const App = () => {
 						</>
 					}
 				/>
+				<Route path="chains" element={<ChainGrid />} />
+				<Route path="list" element={<Outlet />}>
+					<Route path=":chainId" element={<ChainList />} />
+				</Route>
 			</Route>
 		</Routes>
 	)
