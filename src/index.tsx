@@ -11,6 +11,7 @@ import { store } from "./redux/store"
 import { Provider } from "react-redux"
 import { AppModalProvider } from "./contexts/appModalContext/appModalContext"
 import { AppSettingsProvider } from "./contexts/appSettingsContext/appSettingsContext"
+import { ChakraProvider } from "@chakra-ui/react"
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
@@ -18,7 +19,9 @@ root.render(
 		<Provider store={store}>
 			<AppSettingsProvider>
 				<AppModalProvider>
-					<AppOld />
+					<ChakraProvider>
+						<AppOld />
+					</ChakraProvider>
 				</AppModalProvider>
 			</AppSettingsProvider>
 		</Provider>

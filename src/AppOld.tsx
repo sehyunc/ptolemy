@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react"
-import createAccount from "./service/createAccount"
-import login from "./service/login"
-import getAccountInfo from "./service/getAccountInfo"
-import { userCreateAccount } from "./redux/slices/authenticationSlice"
 import axios from "axios"
+import { useColorMode } from "@chakra-ui/react"
+import { useEffect, useState } from "react"
 
 const App = () => {
+	const { colorMode, setColorMode } = useColorMode()
+
+	useEffect(() => {
+		if (colorMode === "light") setColorMode("dark")
+	}, [colorMode, setColorMode])
+
 	return (
 		<div>
 			<LogicComp />
