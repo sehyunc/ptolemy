@@ -1,8 +1,11 @@
 import { Outlet, useNavigate, Link } from "react-router-dom"
 import { Box, Button, Flex, Heading, Spacer } from "@chakra-ui/react"
 
-const TopBar = () => {
+const TopBar = (userAddr: any) => {
   const navigate = useNavigate()
+  // TODO: SHOW USER ADDRESS IN PROFILE
+  // TODO: USE NORMALIZEDD DATA
+  var addr = localStorage.getItem("addr")
 
   return (
     <>
@@ -13,7 +16,7 @@ const TopBar = () => {
           </Flex>
           <Spacer />
           <Link to={"/profile"}>
-            <Button>Profile</Button>
+            <Button>{addr ? addr : "Profile"}</Button>
           </Link>
         </Flex>
       </Box>

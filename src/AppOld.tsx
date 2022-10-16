@@ -12,7 +12,7 @@ import {
   TabPanels,
 } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
-import { Routes, Route, Outlet } from "react-router-dom"
+import { Routes, Route, Outlet, useNavigate } from "react-router-dom"
 import ChainGrid from "./components/ChainGrid"
 import ChainList from "./components/ChainList"
 import ValidatorDetails from "./components/ValidatorDetails"
@@ -38,7 +38,7 @@ const App = () => {
           }
         />
 
-        <Route path="profile" element={<Profile />} />
+        <Route path="profile" element={<Login />} />
         <Route path="chains" element={<ChainGrid />} />
         <Route path="list" element={<Outlet />}>
           <Route path=":chainId" element={<ChainList />} />
@@ -51,30 +51,53 @@ const App = () => {
   )
 }
 
-const Profile = () => {
-  return (
-    <Flex>
-      <Login />
-    </Flex>
-  )
-}
 const Login = () => {
+  const navigate = useNavigate()
+
   const [userAddress, setAddress] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [createAccLoading, setCreateAccLoading] = useState(false)
   const [loginLoading, setLoginLoading] = useState(false)
 
   const createAcc = async () => {
-    // http://localhost:8080/api/v1/account/create
     setCreateAccLoading(true)
     const pass = { password: password }
     axios
       .post("http://localhost:4040/api/v1/account/create", pass)
       .then((response: any) => {
-        console.log(response)
+        console.log("ACCOUNT CREATION", response.data)
         setCreateAccLoading(false)
+        if (response.data?.address) {
+          var addr = localStorage.getItem("addr")
+          if (!addr) {
+            localStorage.setItem("addr", response.data.address)
+          }
+        }
+      })
+      .catch((err) => {
+        setCreateAccLoading(false)
+        console.log(err)
       })
   }
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4040/api/v1/account/info")
+      .then((response: any) => {
+        console.log(response)
+        if (response.data?.Address) {
+          var addr = localStorage.getItem("addr")
+          if (!addr) {
+            localStorage.setItem("addr", response.data.address)
+          }
+          navigate("/chains")
+        }
+      })
+      .catch((err) => {
+        setCreateAccLoading(false)
+        console.log(err)
+      })
+  }, [])
 
   const loginUser = async () => {
     setLoginLoading(true)
@@ -82,8 +105,19 @@ const Login = () => {
     axios
       .post("http://localhost:4040/api/v1/account/login", loginInfo)
       .then((response: any) => {
-        console.log(response)
+        console.log("LOGIN USER", response.data)
         setLoginLoading(false)
+        if (response.data?.address) {
+          var addr = localStorage.getItem("addr")
+          if (!addr) {
+            localStorage.setItem("addr", response.data.address)
+          }
+          navigate("/chains")
+        }
+      })
+      .catch((err) => {
+        setCreateAccLoading(false)
+        console.log(err)
       })
   }
 
