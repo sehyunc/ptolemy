@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useColorMode } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
+import { Routes, Route, Link, Outlet } from "react-router-dom"
 
 const App = () => {
 	const { colorMode, setColorMode } = useColorMode()
@@ -10,17 +11,23 @@ const App = () => {
 	}, [colorMode, setColorMode])
 
 	return (
-		<div>
-			<LogicComp />
-			<br />
-			<hr />
-			<br />
-			<MainPage />
-		</div>
+		<Routes>
+			<Route path="/" element={<Outlet />}>
+				<Route
+					index
+					element={
+						<>
+							<Login />
+							<MainPage />
+						</>
+					}
+				/>
+			</Route>
+		</Routes>
 	)
 }
 
-const LogicComp = () => {
+const Login = () => {
 	const [userAddress, setAddress] = useState<string>("")
 	const [password, setPassword] = useState<string>("")
 
