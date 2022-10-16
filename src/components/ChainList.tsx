@@ -1,10 +1,12 @@
-import { Box, Center, Heading, Text } from "@chakra-ui/react"
-import { useParams } from "react-router-dom"
+import { Box, Button, Center, Heading, Text } from "@chakra-ui/react"
+import { ArrowBackIcon } from "@chakra-ui/icons"
+import { useNavigate, useParams } from "react-router-dom"
 import data from "../mockData.json"
 import Header from "./Header"
 import Row from "./Row"
 
 const ChainList = () => {
+	const navigate = useNavigate()
 	const { chainId } = useParams()
 	const validators = Object.entries(data).filter(
 		([, d]) => d.chainName === chainId
@@ -46,6 +48,14 @@ const ChainList = () => {
 					<Text opacity="0.65">Page 1 of 1</Text>
 				</Box>
 			</Box>
+			<Center>
+				<Button
+					leftIcon={<ArrowBackIcon />}
+					onClick={() => navigate("/chains")}
+				>
+					Back
+				</Button>
+			</Center>
 		</>
 	)
 }

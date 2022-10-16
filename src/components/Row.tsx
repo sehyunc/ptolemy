@@ -1,5 +1,5 @@
 import { Box, Text } from "@chakra-ui/react"
-import React from "react"
+import { Link } from "react-router-dom"
 
 interface RowProps {
 	address: string
@@ -17,7 +17,7 @@ const Row: React.FC<RowProps> = ({
 	reddit,
 }) => {
 	return (
-		<>
+		<Link to={`/validator/${address}`}>
 			<Box
 				alignItems="center"
 				backgroundColor="#0e0e10"
@@ -48,7 +48,7 @@ const Row: React.FC<RowProps> = ({
 					<Text>{reddit}</Text>
 				</Box>
 			</Box>
-		</>
+		</Link>
 	)
 }
 

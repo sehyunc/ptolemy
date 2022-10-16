@@ -4,6 +4,8 @@ import { useEffect, useState } from "react"
 import { Routes, Route, Link, Outlet } from "react-router-dom"
 import ChainGrid from "./components/ChainGrid"
 import ChainList from "./components/ChainList"
+import ValidatorDetails from "./components/ValidatorDetails"
+import TopBar from "./components/TopBar"
 
 const App = () => {
 	const { colorMode, setColorMode } = useColorMode()
@@ -14,14 +16,7 @@ const App = () => {
 
 	return (
 		<Routes>
-			<Route
-				path="/"
-				element={
-					<div style={{ padding: "64px" }}>
-						<Outlet />
-					</div>
-				}
-			>
+			<Route path="/" element={<TopBar />}>
 				<Route
 					index
 					element={
@@ -34,6 +29,9 @@ const App = () => {
 				<Route path="chains" element={<ChainGrid />} />
 				<Route path="list" element={<Outlet />}>
 					<Route path=":chainId" element={<ChainList />} />
+				</Route>
+				<Route path="validator" element={<Outlet />}>
+					<Route path=":validatorId" element={<ValidatorDetails />} />
 				</Route>
 			</Route>
 		</Routes>
